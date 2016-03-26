@@ -1,0 +1,15 @@
+## Interface: 60200
+## Version: 0.1
+## Title: GottaGoFast
+## Notes: CM Style Timer For Timewalking, Ace3 Edition
+## SavedVariables: GottaGoFastDB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+
+Embeds.xml
+
+Core.lua
+Timer.lua
+CM.lua
+TW.lua
+InstanceInfo.lua
