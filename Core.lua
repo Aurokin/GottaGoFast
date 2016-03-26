@@ -1,4 +1,4 @@
-GottaGoFast = LibStub("AceAddon-3.0"):NewAddon("GottaGoFast", "AceConsole-3.0", "AceEvent-3.0");
+GottaGoFast = LibStub("AceAddon-3.0"):NewAddon("GottaGoFast", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
 function GottaGoFast:OnInitialize()
     -- Called when the addon is loaded
@@ -47,9 +47,27 @@ end
 
 function GottaGoFast:PLAYER_ENTERING_WORLD()
   self:Print("Player Entered World");
+  GottaGoFast.WhereAmI();
+end
+
+function GottaGoFast:SCENARIO_POI_UPDATE()
+  if (GottaGoFast.inCM) then
+    self:Print("Scenario POI Update");
+    GottaGoFast.UpdateCMInformation();
+    GottaGoFast.UpdateObjectives();
+  elseif (GottaGoFast.inTW) then
+    self:Print("Scenario POI Update");
+  end
+end
+
+function GottaGoFast.WhereAmI()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
-  if (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
-    self:Print("Player Entered Challenge Mode");
+  GottaGoFast:Print("Difficulty: " .. difficulty);
+  GottaGoFast:Print("Zone ID: " .. currentZoneID);
+  if (difficulty == 0 and GottaGoFastInstanceInfo[currentZoneID]) then
+    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
+  elseif (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
+    GottaGoFast:Print("Player Entered Challenge Mode");
     GottaGoFast.WipeCM();
     GottaGoFast.SetupCM(currentZoneID);
     GottaGoFast.UpdateTimer();
@@ -59,7 +77,7 @@ function GottaGoFast:PLAYER_ENTERING_WORLD()
     GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
     GottaGoFast.ShowFrames();
   elseif (difficulty == 24) then
-    self:Print("Player Entered Timewalking Dungeon");
+    GottaGoFast:Print("Player Entered Timewalking Dungeon");
     GottaGoFast.inCM = false;
     GottaGoFast.inTW = true;
     GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
@@ -71,15 +89,5 @@ function GottaGoFast:PLAYER_ENTERING_WORLD()
     GottaGoFast.inTW = false;
     GottaGoFastFrame:SetScript("OnUpdate", nil);
     GottaGoFast.HideFrames();
-  end
-end
-
-function GottaGoFast:SCENARIO_POI_UPDATE()
-  if (GottaGoFast.inCM) then
-    self:Print("Scenario POI Update");
-    GottaGoFast.UpdateCMInformation();
-    GottaGoFast.UpdateObjectives();
-  elseif (GottaGoFast.inTW) then
-    self:Print("Scenario POI Update");
   end
 end
