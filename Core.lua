@@ -20,7 +20,8 @@ function GottaGoFast:OnEnable()
 
     -- Setup AddOn
     GottaGoFast.InitState();
-    GottaGoFast.InitFrame();
+    GottaGoFast.InitOptions();
+    GottaGoFast.InitFrame();  
 
 end
 

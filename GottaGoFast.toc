@@ -13,3 +13,4 @@ Timer.lua
 CM.lua
 TW.lua
 InstanceInfo.lua
+Options.lua

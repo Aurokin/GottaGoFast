@@ -26,6 +26,9 @@ function GottaGoFast.SetupCM(currentZoneID)
     GottaGoFast.CurrentCM["Bosses"][i] = name;
   end
 
+  ObjectiveTrackerFrame:SetScript("OnEvent", nil);
+  ObjectiveTrackerFrame:Hide();
+
 end
 
 function GottaGoFast.UpdateCMInformation()

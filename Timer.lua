@@ -18,7 +18,7 @@ function GottaGoFast.InitFrame()
 
   -- Move Frame When Unlocked
   GottaGoFastFrame:SetScript("OnMouseDown", function(self, button)
-    if GottaGoFastFrame.unlocked and button == "LeftButton" and not self.isMoving then
+    if GottaGoFast.unlocked and button == "LeftButton" and not self.isMoving then
      self:StartMoving();
      self.isMoving = true;
     end
@@ -29,12 +29,10 @@ function GottaGoFast.InitFrame()
      self:StopMovingOrSizing();
      self.isMoving = false;
      local point, relativeTo, relativePoint, xOffset, yOffset = GottaGoFastFrame:GetPoint(1);
-     --[[
-     Saving Variables Not Yet Enabled. Ace3DB Will Be Used
-     GottaGoFastVars["anchor"] = point;
-     GottaGoFastVars["xOffset"] = xOffset;
-     GottaGoFastVars["yOffset"] = yOffset;
-     ]]--
+     
+     GottaGoFast.db.profile.FrameAnchor = point;
+     GottaGoFast.db.profile.FrameX = xOffset;
+     GottaGoFast.db.profile.FrameY = yOffset;
     end
   end);
 
@@ -48,7 +46,7 @@ function GottaGoFast.InitFrame()
   -- Set Frame Width / Height
   GottaGoFastFrame:SetHeight(340);
   GottaGoFastFrame:SetWidth(GottaGoFast.minWidth);
-  GottaGoFastFrame:SetPoint("RIGHT", 0, 0);
+  GottaGoFastFrame:SetPoint(GottaGoFast.db.profile.FrameAnchor, GottaGoFast.db.profile.FrameX, GottaGoFast.db.profile.FrameY);
   GottaGoFastFrame:SetMovable(GottaGoFast.unlocked);
   GottaGoFastFrame:EnableMouse(GottaGoFast.unlocked);
   GottaGoFastTimerFrame:SetHeight(40);
