@@ -135,6 +135,6 @@ function GottaGoFast.FormatTimeMS(time)
   return time;
 end
 
-function GottaGoFast.CompleteString(time)
+function GottaGoFast.ObjectiveCompleteString(time)
   return string.format("|c%s%s|r", "000ff000", time)
 end
