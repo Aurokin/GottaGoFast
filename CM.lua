@@ -46,7 +46,8 @@ function GottaGoFast.UpdateCMInformation()
           GottaGoFast.CurrentCM["CurrentValues"][i] = curValue;
           if (curValue == finalValue) then
             -- Add Objective Time
-            GottaGoFast.CurrentCM["ObjectiveTimes"][i] = string.format("|c%s%s|r", "000ff000", GottaGoFast.CurrentCM["Time"]);
+
+            GottaGoFast.CurrentCM["ObjectiveTimes"][i] = GottaGoFast.CompleteString(GottaGoFast.CurrentCM["Time"]);
           end
         elseif (GottaGoFast.CurrentCM["CurrentValues"][i] == GottaGoFast.CurrentCM["FinalValues"][i] and not GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
           -- Objective Already Complete But No Time Filled Out (Re-Log / Re-Zone)
@@ -62,7 +63,7 @@ function GottaGoFast.FinalParse()
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
       GottaGoFast.CurrentCM["CurrentValues"][i] = GottaGoFast.CurrentCM["FinalValues"][i];
       if (not GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
-        GottaGoFast.CurrentCM["ObjectiveTimes"][i] = string.format("|c%s%s|r", "000ff000", GottaGoFast.CurrentCM["Time"]);
+        GottaGoFast.CurrentCM["ObjectiveTimes"][i] = GottaGoFast.CompleteString(GottaGoFast.CurrentCM["Time"]);
       end
     end
   end

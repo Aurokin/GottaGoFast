@@ -29,7 +29,7 @@ function GottaGoFast.InitFrame()
      self:StopMovingOrSizing();
      self.isMoving = false;
      local point, relativeTo, relativePoint, xOffset, yOffset = GottaGoFastFrame:GetPoint(1);
-     
+
      GottaGoFast.db.profile.FrameAnchor = point;
      GottaGoFast.db.profile.FrameX = xOffset;
      GottaGoFast.db.profile.FrameY = yOffset;
@@ -133,4 +133,8 @@ function GottaGoFast.FormatTimeMS(time)
     time = string.format("%.3f", time);
   end
   return time;
+end
+
+function GottaGoFast.CompleteString(time)
+  return string.format("|c%s%s|r", "000ff000", time)
 end
