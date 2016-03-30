@@ -51,22 +51,22 @@ function GottaGoFast.InitFrame()
   GottaGoFastFrame:EnableMouse(GottaGoFast.unlocked);
   GottaGoFastTimerFrame:SetHeight(40);
   GottaGoFastTimerFrame:SetWidth(GottaGoFast.minWidth);
-  GottaGoFastTimerFrame:SetPoint("TOP", 0, 0);
+  GottaGoFastTimerFrame:SetPoint("TOP", GottaGoFast.db.profile.TimerX, GottaGoFast.db.profile.TimerY);
   GottaGoFastObjectiveFrame:SetHeight(300);
   GottaGoFastObjectiveFrame:SetWidth(GottaGoFast.minWidth);
-  GottaGoFastObjectiveFrame:SetPoint("TOP", 0, -40);
+  GottaGoFastObjectiveFrame:SetPoint("TOP", GottaGoFast.db.profile.ObjectiveX, GottaGoFast.db.profile.ObjectiveY);
 
   -- Set Font Settings
   GottaGoFastTimerFrame.font:SetAllPoints(true);
-  GottaGoFastTimerFrame.font:SetJustifyH("CENTER");
+  GottaGoFastTimerFrame.font:SetJustifyH(GottaGoFast.db.profile.TimerAlign);
   GottaGoFastTimerFrame.font:SetJustifyV("BOTTOM");
-  GottaGoFastTimerFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", 29, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
   GottaGoFastTimerFrame.font:SetTextColor(1, 1, 1, 1);
 
   GottaGoFastObjectiveFrame.font:SetAllPoints(true);
-  GottaGoFastObjectiveFrame.font:SetJustifyH("LEFT");
+  GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
   GottaGoFastObjectiveFrame.font:SetJustifyV("TOP");
-  GottaGoFastObjectiveFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", 21, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
   GottaGoFastObjectiveFrame.font:SetTextColor(1, 1, 1, 1);
 
   -- Remove Frame Background

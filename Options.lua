@@ -32,6 +32,14 @@ function GottaGoFast.InitOptions()
       FrameAnchor = "RIGHT",
       FrameX = 0,
       FrameY = 0,
+      TimerAlign = "CENTER",
+      TimerX = 0,
+      TimerY = 0,
+      TimerFontSize = 29,
+      ObjectiveAlign = "LEFT",
+      ObjectiveX = 0,
+      ObjectiveY = -40,
+      ObjectiveFontSize = 21,
     },
   }
   local options = {
