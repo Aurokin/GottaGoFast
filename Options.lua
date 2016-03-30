@@ -8,6 +8,14 @@ function GottaGoFast.SetUnlocked(info, value)
   GottaGoFastFrame:EnableMouse(GottaGoFast.unlocked);
 end
 
+function GottaGoFast.GetGoldTimer(info)
+  return GottaGoFast.db.profile.GoldTimer;
+end
+
+function GottaGoFast.SetGoldTimer(info, value)
+  GottaGoFast.db.profile.GoldTimer = value;
+end
+
 function GottaGoFast.InitOptions()
   local defaults = {
     profile = {
@@ -29,7 +37,15 @@ function GottaGoFast.InitOptions()
         desc = "Toggles Unlock State Of Timer Frame",
         get = GottaGoFast.GetUnlocked,
         set = GottaGoFast.SetUnlocked,
-      }
+      },
+      GoldTimer = {
+        order = 2,
+        type = "toggle",
+        name = "Gold Timer",
+        desc = "Toggles Gold Timer",
+        get = GottaGoFast.GetGoldTimer,
+        set = GottaGoFast.SetGoldTimer,
+      },
     },
   };
   GottaGoFast.db = LibStub("AceDB-3.0"):New("GottaGoFastDB", defaults, true);

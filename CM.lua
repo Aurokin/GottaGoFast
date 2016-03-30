@@ -104,14 +104,16 @@ function GottaGoFast.UpdateTimer()
         startMin = GottaGoFast.FormatTimeNoMS(startMin);
         startSec = GottaGoFast.FormatTimeNoMS(startSec);
       end
-      time = startMin .. ":" .. startSec;
+      time = startMin .. ":" .. startSec .. " ";
       GottaGoFast.CurrentCM["Time"] = time;
 
       goldMin, goldSec = GottaGoFast.SecondsToTime(GottaGoFast.CurrentCM["GoldTimer"]);
       goldMin = GottaGoFast.FormatTimeNoMS(goldMin);
       goldSec = GottaGoFast.FormatTimeNoMS(goldSec);
 
-      time = time .. " / " .. goldMin .. ":" .. goldSec;
+      if (GottaGoFast.db.profile.GoldTimer) then
+        time = time .. "/ " .. goldMin .. ":" .. goldSec;
+      end
 
       -- Update Frame
       GottaGoFastTimerFrame.font:SetText(time);
