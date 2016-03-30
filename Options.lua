@@ -16,10 +16,19 @@ function GottaGoFast.SetGoldTimer(info, value)
   GottaGoFast.db.profile.GoldTimer = value;
 end
 
+function GottaGoFast.GetTrueTimer(info)
+  return GottaGoFast.db.profile.TrueTimer;
+end
+
+function GottaGoFast.SetTrueTimer(info, value)
+  GottaGoFast.db.profile.TrueTimer = value;
+end
+
 function GottaGoFast.InitOptions()
   local defaults = {
     profile = {
       GoldTimer = true,
+      TrueTimer = true,
       FrameAnchor = "RIGHT",
       FrameX = 0,
       FrameY = 0,
@@ -38,8 +47,16 @@ function GottaGoFast.InitOptions()
         get = GottaGoFast.GetUnlocked,
         set = GottaGoFast.SetUnlocked,
       },
-      GoldTimer = {
+      TrueTimer = {
         order = 2,
+        type = "toggle",
+        name = "True Timer",
+        desc = "Toggles True Timer",
+        get = GottaGoFast.GetTrueTimer,
+        set = GottaGoFast.SetTrueTimer,
+      },
+      GoldTimer = {
+        order = 3,
         type = "toggle",
         name = "Gold Timer",
         desc = "Toggles Gold Timer",

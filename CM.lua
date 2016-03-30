@@ -92,7 +92,7 @@ function GottaGoFast.UpdateTimer()
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       local time = "";
       local startMin, startSec, goldMin, goldSec;
-      if (GottaGoFast.CurrentCM["StartTime"]) then
+      if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
         local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
         startMin, startSec = GottaGoFast.SecondsToTime(secs);
