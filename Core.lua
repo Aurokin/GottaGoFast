@@ -17,11 +17,12 @@ function GottaGoFast:OnEnable()
     self:RegisterEvent("CHALLENGE_MODE_RESET");
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("SCENARIO_POI_UPDATE");
+    self:RegisterEvent("GOSSIP_SHOW");
 
     -- Setup AddOn
     GottaGoFast.InitState();
     GottaGoFast.InitOptions();
-    GottaGoFast.InitFrame();  
+    GottaGoFast.InitFrame();
 
 end
 
@@ -58,6 +59,12 @@ function GottaGoFast:SCENARIO_POI_UPDATE()
     GottaGoFast.UpdateObjectives();
   elseif (GottaGoFast.inTW) then
     self:Print("Scenario POI Update");
+  end
+end
+
+function GottaGoFast:GOSSIP_SHOW()
+  if (GottaGoFast.inCM and GottaGoFast.db.profile.CMAutoStart) then
+    SelectGossipOption(1);
   end
 end
 

@@ -100,12 +100,21 @@ function GottaGoFast.SetObjectiveAlign(info, value)
   GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
 end
 
+function GottaGoFast.GetCMAutoStart(info)
+  return GottaGoFast.db.profile.CMAutoStart;
+end
+
+function GottaGoFast.SetCMAutoStart(info, value)
+  GottaGoFast.db.profile.CMAutoStart = value;
+end
+
 
 function GottaGoFast.InitOptions()
   local defaults = {
     profile = {
       GoldTimer = true,
       TrueTimer = true,
+      CMAutoStart = false,
       FrameAnchor = "RIGHT",
       FrameX = 0,
       FrameY = 0,
@@ -233,6 +242,14 @@ function GottaGoFast.InitOptions()
         values = {["LEFT"] = "LEFT", ["CENTER"] = "CENTER", ["RIGHT"] = "RIGHT"},
         get = GottaGoFast.GetObjectiveAlign,
         set = GottaGoFast.SetObjectiveAlign,
+      },
+      CMAutoStart = {
+        order = 12,
+        type = "toggle",
+        name = "CM Auto Start",
+        desc = "Auto Starts CM When Orb Is Clicked",
+        get = GottaGoFast.GetCMAutoStart,
+        set = GottaGoFast.SetCMAutoStart,
       },
     },
   };
