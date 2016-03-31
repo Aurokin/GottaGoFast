@@ -33,34 +33,34 @@ function GottaGoFast:OnDisable()
 end
 
 function GottaGoFast:CHALLENGE_MODE_START()
-  self:Print("CM Start");
+  --self:Print("CM Start");
   GottaGoFast.StartCM();
 end
 
 function GottaGoFast:CHALLENGE_MODE_COMPLETED()
-  self:Print("CM Complete");
+  --self:Print("CM Complete");
   GottaGoFast.CompleteCM();
 end
 
 function GottaGoFast:CHALLENGE_MODE_RESET()
-  self:Print("CM Reset");
+  --self:Print("CM Reset");
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
   GottaGoFast.WipeCM();
   GottaGoFast.SetupCM(currentZoneID);
 end
 
 function GottaGoFast:PLAYER_ENTERING_WORLD()
-  self:Print("Player Entered World");
+  --self:Print("Player Entered World");
   GottaGoFast.WhereAmI();
 end
 
 function GottaGoFast:SCENARIO_POI_UPDATE()
   if (GottaGoFast.inCM) then
-    self:Print("Scenario POI Update");
+    --self:Print("Scenario POI Update");
     GottaGoFast.UpdateCMInformation();
     GottaGoFast.UpdateObjectives();
   elseif (GottaGoFast.inTW) then
-    self:Print("Scenario POI Update");
+    --self:Print("Scenario POI Update");
   end
 end
 
