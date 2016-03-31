@@ -57,17 +57,16 @@ function GottaGoFast.InitFrame()
   GottaGoFastObjectiveFrame:SetPoint("TOP", GottaGoFast.db.profile.ObjectiveX, GottaGoFast.db.profile.ObjectiveY);
 
   -- Set Font Settings
-  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFastTimerFrame.font:SetAllPoints(true);
   GottaGoFastTimerFrame.font:SetJustifyH(GottaGoFast.db.profile.TimerAlign);
   GottaGoFastTimerFrame.font:SetJustifyV("BOTTOM");
-  GottaGoFastTimerFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
   GottaGoFastTimerFrame.font:SetTextColor(1, 1, 1, 1);
 
   GottaGoFastObjectiveFrame.font:SetAllPoints(true);
   GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
   GottaGoFastObjectiveFrame.font:SetJustifyV("TOP");
-  GottaGoFastObjectiveFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
   GottaGoFastObjectiveFrame.font:SetTextColor(1, 1, 1, 1);
 
   -- Remove Frame Background
