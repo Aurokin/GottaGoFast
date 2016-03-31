@@ -18,6 +18,8 @@ function GottaGoFast:OnEnable()
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("SCENARIO_POI_UPDATE");
     self:RegisterEvent("GOSSIP_SHOW");
+    self:RegisterChatCommand("ggf", "ChatCommand");
+    self:RegisterChatCommand("GottaGoFast", "ChatCommand");
 
     -- Setup AddOn
     GottaGoFast.InitState();
@@ -66,6 +68,11 @@ function GottaGoFast:GOSSIP_SHOW()
   if (GottaGoFast.inCM and GottaGoFast.db.profile.CMAutoStart) then
     SelectGossipOption(1);
   end
+end
+
+function GottaGoFast:ChatCommand(input)
+  InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
+  InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
 end
 
 function GottaGoFast.WhereAmI()
