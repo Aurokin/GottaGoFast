@@ -24,6 +24,83 @@ function GottaGoFast.SetTrueTimer(info, value)
   GottaGoFast.db.profile.TrueTimer = value;
 end
 
+function GottaGoFast.GetTimerX(info)
+  return GottaGoFast.db.profile.TimerX;
+end
+
+function GottaGoFast.SetTimerX(info, value)
+  GottaGoFast.db.profile.TimerX = value;
+  GottaGoFastTimerFrame:ClearAllPoints();
+  GottaGoFastTimerFrame:SetPoint("TOP", GottaGoFast.db.profile.TimerX, GottaGoFast.db.profile.TimerY);
+end
+
+function GottaGoFast.GetTimerY(info)
+  return GottaGoFast.db.profile.TimerY;
+end
+
+function GottaGoFast.SetTimerY(info, value)
+  GottaGoFast.db.profile.TimerY = value;
+  GottaGoFastTimerFrame:ClearAllPoints();
+  GottaGoFastTimerFrame:SetPoint("TOP", GottaGoFast.db.profile.TimerX, GottaGoFast.db.profile.TimerY);
+end
+
+function GottaGoFast.GetTimerFontSize(info)
+  return GottaGoFast.db.profile.TimerFontSize;
+end
+
+function GottaGoFast.SetTimerFontSize(info, value)
+  GottaGoFast.db.profile.TimerFontSize = value;
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.db.profile.TimerFont, GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+end
+
+function GottaGoFast.GetTimerAlign(info)
+  return GottaGoFast.db.profile.TimerAlign;
+end
+
+function GottaGoFast.SetTimerAlign(info, value)
+  GottaGoFast.db.profile.TimerAlign = value;
+  GottaGoFastTimerFrame.font:SetJustifyH(GottaGoFast.db.profile.TimerAlign);
+end
+
+function GottaGoFast.GetObjectiveX(info)
+  return GottaGoFast.db.profile.ObjectiveX;
+end
+
+function GottaGoFast.SetObjectiveX(info, value)
+  GottaGoFast.db.profile.ObjectiveX = value;
+  GottaGoFastObjectiveFrame:ClearAllPoints();
+  GottaGoFastObjectiveFrame:SetPoint("TOP", GottaGoFast.db.profile.ObjectiveX, GottaGoFast.db.profile.ObjectiveY);
+end
+
+function GottaGoFast.GetObjectiveY(info)
+  return GottaGoFast.db.profile.ObjectiveY;
+end
+
+function GottaGoFast.SetObjectiveY(info, value)
+  GottaGoFast.db.profile.ObjectiveY = value;
+  GottaGoFastObjectiveFrame:ClearAllPoints();
+  GottaGoFastObjectiveFrame:SetPoint("TOP", GottaGoFast.db.profile.ObjectiveX, GottaGoFast.db.profile.ObjectiveY);
+end
+
+function GottaGoFast.GetObjectiveFontSize(info)
+  return GottaGoFast.db.profile.ObjectiveFontSize;
+end
+
+function GottaGoFast.SetObjectiveFontSize(info, value)
+  GottaGoFast.db.profile.ObjectiveFontSize = value;
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.db.profile.ObjectiveFont, GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+end
+
+function GottaGoFast.GetObjectiveAlign(info)
+  return GottaGoFast.db.profile.ObjectiveAlign;
+end
+
+function GottaGoFast.SetObjectiveAlign(info, value)
+  GottaGoFast.db.profile.ObjectiveAlign = value;
+  GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
+end
+
+
 function GottaGoFast.InitOptions()
   local defaults = {
     profile = {
@@ -35,10 +112,12 @@ function GottaGoFast.InitOptions()
       TimerAlign = "CENTER",
       TimerX = 0,
       TimerY = 0,
+      TimerFont = "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf",
       TimerFontSize = 29,
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
+      ObjectiveFont = "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf",
       ObjectiveFontSize = 21,
     },
   }
@@ -70,6 +149,90 @@ function GottaGoFast.InitOptions()
         desc = "Toggles Gold Timer",
         get = GottaGoFast.GetGoldTimer,
         set = GottaGoFast.SetGoldTimer,
+      },
+      TimerX = {
+        order = 4,
+        type = "range",
+        name = "Timer X Offset",
+        desc = "Default: 0",
+        min = -100,
+        max = 100,
+        step = 1,
+        get = GottaGoFast.GetTimerX,
+        set = GottaGoFast.SetTimerX,
+      },
+      TimerY = {
+        order = 5,
+        type = "range",
+        name = "Timer Y Offset",
+        desc = "Default: 0",
+        min = -100,
+        max = 100,
+        step = 1,
+        get = GottaGoFast.GetTimerY,
+        set = GottaGoFast.SetTimerY,
+      },
+      TimerFontSize = {
+        order = 6,
+        type = "range",
+        name = "Timer Font Size",
+        desc = "Default: 29",
+        min = 8,
+        max = 32,
+        step = 1,
+        get = GottaGoFast.GetTimerFontSize,
+        set = GottaGoFast.SetTimerFontSize,
+      },
+      ObjectiveX = {
+        order = 7,
+        type = "range",
+        name = "Objective X Offset",
+        desc = "Default: 0",
+        min = -100,
+        max = 100,
+        step = 1,
+        get = GottaGoFast.GetObjectiveX,
+        set = GottaGoFast.SetObjectiveX,
+      },
+      ObjectiveY = {
+        order = 8,
+        type = "range",
+        name = "Objective Y Offset",
+        desc = "Default: -40",
+        min = -100,
+        max = 100,
+        step = 1,
+        get = GottaGoFast.GetObjectiveY,
+        set = GottaGoFast.SetObjectiveY,
+      },
+      ObjectiveFontSize = {
+        order = 9,
+        type = "range",
+        name = "Objective Font Size",
+        desc = "Default: 21",
+        min = 8,
+        max = 32,
+        step = 1,
+        get = GottaGoFast.GetObjectiveFontSize,
+        set = GottaGoFast.SetObjectiveFontSize,
+      },
+      TimerAlign = {
+        order = 10,
+        type = "select",
+        name = "Timer Align",
+        desc = "Default: CENTER",
+        values = {["LEFT"] = "LEFT", ["CENTER"] = "CENTER", ["RIGHT"] = "RIGHT"},
+        get = GottaGoFast.GetTimerAlign,
+        set = GottaGoFast.SetTimerAlign,
+      },
+      ObjectiveAlign = {
+        order = 11,
+        type = "select",
+        name = "Objective Align",
+        desc = "Default: LEFT",
+        values = {["LEFT"] = "LEFT", ["CENTER"] = "CENTER", ["RIGHT"] = "RIGHT"},
+        get = GottaGoFast.GetObjectiveAlign,
+        set = GottaGoFast.SetObjectiveAlign,
       },
     },
   };

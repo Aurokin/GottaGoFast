@@ -60,13 +60,13 @@ function GottaGoFast.InitFrame()
   GottaGoFastTimerFrame.font:SetAllPoints(true);
   GottaGoFastTimerFrame.font:SetJustifyH(GottaGoFast.db.profile.TimerAlign);
   GottaGoFastTimerFrame.font:SetJustifyV("BOTTOM");
-  GottaGoFastTimerFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.db.profile.TimerFont, GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
   GottaGoFastTimerFrame.font:SetTextColor(1, 1, 1, 1);
 
   GottaGoFastObjectiveFrame.font:SetAllPoints(true);
   GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
   GottaGoFastObjectiveFrame.font:SetJustifyV("TOP");
-  GottaGoFastObjectiveFrame.font:SetFont("Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf", GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.db.profile.ObjectiveFont, GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
   GottaGoFastObjectiveFrame.font:SetTextColor(1, 1, 1, 1);
 
   -- Remove Frame Background
