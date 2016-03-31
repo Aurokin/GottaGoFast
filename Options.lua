@@ -44,13 +44,34 @@ function GottaGoFast.SetTimerY(info, value)
   GottaGoFastTimerFrame:SetPoint("TOP", GottaGoFast.db.profile.TimerX, GottaGoFast.db.profile.TimerY);
 end
 
+function GottaGoFast.GetTimerFont(info)
+  return GottaGoFast.db.profile.TimerFont;
+end
+
+function GottaGoFast.SetTimerFont(info, value)
+  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
+  GottaGoFast.db.profile.TimerFont = value;
+  GottaGoFastTimerFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+end
+
+function GottaGoFast.GetObjectiveFont(info)
+  return GottaGoFast.db.profile.ObjectiveFont;
+end
+
+function GottaGoFast.SetObjectiveFont(info, value)
+  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
+  GottaGoFast.db.profile.ObjectiveFont = value;
+  GottaGoFastObjectiveFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+end
+
 function GottaGoFast.GetTimerFontSize(info)
   return GottaGoFast.db.profile.TimerFontSize;
 end
 
 function GottaGoFast.SetTimerFontSize(info, value)
+  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFast.db.profile.TimerFontSize = value;
-  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.db.profile.TimerFont, GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
 end
 
 function GottaGoFast.GetTimerAlign(info)
@@ -87,8 +108,9 @@ function GottaGoFast.GetObjectiveFontSize(info)
 end
 
 function GottaGoFast.SetObjectiveFontSize(info, value)
+  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFast.db.profile.ObjectiveFontSize = value;
-  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.db.profile.ObjectiveFont, GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont(LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
 end
 
 function GottaGoFast.GetObjectiveAlign(info)
@@ -110,6 +132,7 @@ end
 
 
 function GottaGoFast.InitOptions()
+  local LSM = LibStub:GetLibrary("LibSharedMedia-3.0")
   local defaults = {
     profile = {
       GoldTimer = true,
@@ -121,12 +144,12 @@ function GottaGoFast.InitOptions()
       TimerAlign = "CENTER",
       TimerX = 0,
       TimerY = 0,
-      TimerFont = "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf",
+      TimerFont = "Arial Narrow",
       TimerFontSize = 29,
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
-      ObjectiveFont = "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf",
+      ObjectiveFont = "Arial Narrow",
       ObjectiveFontSize = 21,
     },
   }
@@ -260,6 +283,26 @@ function GottaGoFast.InitOptions()
             values = {["LEFT"] = "LEFT", ["CENTER"] = "CENTER", ["RIGHT"] = "RIGHT"},
             get = GottaGoFast.GetObjectiveAlign,
             set = GottaGoFast.SetObjectiveAlign,
+          },
+          TimerFont = {
+            order = 11,
+            type = "select",
+            dialogControl = "LSM30_Font",
+            name = "Timer Font",
+            desc = "Default: Arial, Monospaced Fonts like MyriadCondensedWeb are recommended",
+            values = LSM:HashTable("font"),
+            get = GottaGoFast.GetTimerFont,
+            set = GottaGoFast.SetTimerFont,
+          },
+          ObjectiveFont = {
+            order = 12,
+            type = "select",
+            dialogControl = "LSM30_Font",
+            name = "Objective Font",
+            desc = "Default: Arial, Monospaced Fonts like MyriadCondensedWeb are recommended",
+            values = LSM:HashTable("font"),
+            get = GottaGoFast.GetObjectiveFont,
+            set = GottaGoFast.SetObjectiveFont,
           },
         },
       },
