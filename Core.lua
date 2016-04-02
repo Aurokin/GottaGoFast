@@ -104,5 +104,6 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.inTW = false;
     GottaGoFastFrame:SetScript("OnUpdate", nil);
     GottaGoFast.HideFrames();
+    ObjectiveTrackerFrame:SetParent(GottaGoFast.ObjectiveParent);
   end
 end
