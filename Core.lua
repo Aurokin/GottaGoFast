@@ -79,8 +79,8 @@ end
 
 function GottaGoFast.WhereAmI()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
-  GottaGoFast:Print("Difficulty: " .. difficulty);
-  GottaGoFast:Print("Zone ID: " .. currentZoneID);
+  --GottaGoFast:Print("Difficulty: " .. difficulty);
+  --GottaGoFast:Print("Zone ID: " .. currentZoneID);
   if (difficulty == 0 and GottaGoFastInstanceInfo[currentZoneID]) then
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
   elseif (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
