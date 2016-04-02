@@ -1,7 +1,8 @@
-Gotta Go Fast
+# Gotta Go Fast
+CM Timer!
 
-CM Timer
+# To Do List
+- Color Objectives / Objective Complete
+- Implement Timewalking Timer
 
-Bugs
-
-Doesn't Pop Up, Disappears Sometimes
+# Bugs
