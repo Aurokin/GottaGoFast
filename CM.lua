@@ -25,9 +25,8 @@ function GottaGoFast.SetupCM(currentZoneID)
     GottaGoFast.CurrentCM["FinalValues"][i] = finalValue;
     GottaGoFast.CurrentCM["Bosses"][i] = name;
   end
-
-  ObjectiveTrackerFrame:SetParent(GottaGoFastHideFrame);
-
+  
+  GottaGoFast.HideObjectiveTracker();
 end
 
 function GottaGoFast.UpdateCMInformation()

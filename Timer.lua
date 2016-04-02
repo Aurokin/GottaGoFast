@@ -138,3 +138,14 @@ end
 function GottaGoFast.ObjectiveCompleteString(time)
   return string.format("|c%s%s|r", "000ff000", time)
 end
+
+function GottaGoFast.HideObjectiveTracker()
+  ObjectiveTrackerFrame:SetParent(GottaGoFastHideFrame);
+end
+
+function GottaGoFast.ShowObjectiveTracker()
+  ObjectiveTrackerFrame:SetParent(UIParent);
+  if (GottaGoFast.db.profile.ObjectiveCollapsed == true) then
+    ObjectiveTracker_Collapse();
+  end
+end

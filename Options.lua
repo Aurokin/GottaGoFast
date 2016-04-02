@@ -126,6 +126,14 @@ function GottaGoFast.SetCMAutoStart(info, value)
   GottaGoFast.db.profile.CMAutoStart = value;
 end
 
+function GottaGoFast.GetObjectiveCollapsed(info)
+  return GottaGoFast.db.profile.ObjectiveCollapsed;
+end
+
+function GottaGoFast.SetObjectiveCollapsed(info, value)
+  GottaGoFast.db.profile.ObjectiveCollapsed = value;
+end
+
 
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
@@ -148,6 +156,7 @@ function GottaGoFast.InitOptions()
       ObjectiveY = -40,
       ObjectiveFont = "Myriad Condensed Web",
       ObjectiveFontSize = 21,
+      ObjectiveCollapsed = true,
     },
   }
   local options = {
@@ -301,6 +310,14 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetObjectiveFont,
             set = GottaGoFast.SetObjectiveFont,
           },
+          ObjectiveCollapsed = {
+            order = 13,
+            type = "toggle",
+            name = "Objective Tracker Collapse",
+            desc = "Collapse Objective Tracker When Leaving CM / Timewalker",
+            get = GottaGoFast.GetObjectiveCollapsed,
+            set = GottaGoFast.SetObjectiveCollapsed,
+          }
         },
       },
     },
