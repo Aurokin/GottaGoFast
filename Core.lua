@@ -6,6 +6,8 @@ function GottaGoFast:OnInitialize()
     GottaGoFastFrame = CreateFrame("Frame", "GottaGoFastFrame", UIParent);
     GottaGoFastTimerFrame = CreateFrame("Frame", "GottaGoFastTimerFrame", GottaGoFastFrame);
     GottaGoFastObjectiveFrame = CreateFrame("Frame", "GottaGoFastObjectiveFrame", GottaGoFastFrame);
+    GottaGoFastHideFrame = CreateFrame("Frame");
+    GottaGoFastHideFrame:Hide();
 end
 
 function GottaGoFast:OnEnable()
@@ -104,6 +106,6 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.inTW = false;
     GottaGoFastFrame:SetScript("OnUpdate", nil);
     GottaGoFast.HideFrames();
-    ObjectiveTrackerFrame:SetParent(GottaGoFast.ObjectiveParent);
+    ObjectiveTrackerFrame:SetParent(UIParent);
   end
 end

@@ -4,7 +4,6 @@ function GottaGoFast.InitState()
   GottaGoFast.inCM = false;
   GottaGoFast.minWidth = 200;
   GottaGoFast.unlocked = false;
-  GottaGoFast.ObjectiveParent = ObjectiveTrackerFrame:GetParent() or UIParent;
 end
 
 function GottaGoFast.InitFrame()
