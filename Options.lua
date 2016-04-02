@@ -129,6 +129,7 @@ end
 
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
+  GottaGoFast.LSM:Register("font", "Myriad Condensed Web", "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf")
   local defaults = {
     profile = {
       GoldTimer = true,
@@ -140,12 +141,12 @@ function GottaGoFast.InitOptions()
       TimerAlign = "CENTER",
       TimerX = 0,
       TimerY = 0,
-      TimerFont = "Arial Narrow",
+      TimerFont = "Myriad Condensed Web",
       TimerFontSize = 29,
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
-      ObjectiveFont = "Arial Narrow",
+      ObjectiveFont = "Myriad Condensed Web",
       ObjectiveFontSize = 21,
     },
   }
