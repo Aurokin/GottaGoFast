@@ -150,7 +150,7 @@ end
 
 function GottaGoFast.SetObjectiveColor(info, r, g, b, a)
   GottaGoFast.db.profile.ObjectiveColor = GottaGoFast.RGBToHex(a, r, g, b);
-  GottaGoFast.UpdateObjectives();
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.GetObjectiveCompleteColor(info)
@@ -160,7 +160,7 @@ end
 
 function GottaGoFast.SetObjectiveCompleteColor(info, r, g, b, a)
   GottaGoFast.db.profile.ObjectiveCompleteColor = GottaGoFast.RGBToHex(a, r, g, b);
-  GottaGoFast.UpdateObjectives();
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.InitOptions()

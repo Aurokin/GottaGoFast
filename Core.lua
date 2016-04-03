@@ -60,7 +60,7 @@ function GottaGoFast:SCENARIO_POI_UPDATE()
   if (GottaGoFast.inCM) then
     --self:Print("Scenario POI Update");
     GottaGoFast.UpdateCMInformation();
-    GottaGoFast.UpdateObjectives();
+    GottaGoFast.UpdateCMObjectives();
   elseif (GottaGoFast.inTW) then
     --self:Print("Scenario POI Update");
   end
@@ -87,8 +87,8 @@ function GottaGoFast.WhereAmI()
     GottaGoFast:Print("Player Entered Challenge Mode");
     GottaGoFast.WipeCM();
     GottaGoFast.SetupCM(currentZoneID);
-    GottaGoFast.UpdateTimer();
-    GottaGoFast.UpdateObjectives();
+    GottaGoFast.UpdateCMTimer();
+    GottaGoFast.UpdateCMObjectives();
     GottaGoFast.inCM = true;
     GottaGoFast.inTW = false;
     GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);

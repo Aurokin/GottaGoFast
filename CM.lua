@@ -1,6 +1,6 @@
 function GottaGoFast.UpdateCM()
   if (GottaGoFast.CurrentCM) then
-    GottaGoFast.UpdateTimer();
+    GottaGoFast.UpdateCMTimer();
     -- Hopefully use SCENARIO_POI_UPDATE to update objectives
   end
 end
@@ -85,7 +85,7 @@ function GottaGoFast.CompleteCM()
   end
 end
 
-function GottaGoFast.UpdateTimer()
+function GottaGoFast.UpdateCMTimer()
   if (GottaGoFast.CurrentCM) then
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       local time = "";
@@ -120,7 +120,7 @@ function GottaGoFast.UpdateTimer()
   end
 end
 
-function GottaGoFast.UpdateObjectives()
+function GottaGoFast.UpdateCMObjectives()
   if (GottaGoFast.CurrentCM) then
     local objectiveString = "";
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
