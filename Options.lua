@@ -140,7 +140,7 @@ function GottaGoFast.GetTimerColor(info)
 end
 
 function GottaGoFast.SetTimerColor(info, r, g, b, a)
-  GottaGoFast.db.profile.TimerColor = GottaGoFast.RGBToHex(a, r, g, b);
+  GottaGoFast.db.profile.TimerColor = GottaGoFast.RGBToHex(r, g, b, a);
 end
 
 function GottaGoFast.GetObjectiveColor(info)
@@ -149,7 +149,7 @@ function GottaGoFast.GetObjectiveColor(info)
 end
 
 function GottaGoFast.SetObjectiveColor(info, r, g, b, a)
-  GottaGoFast.db.profile.ObjectiveColor = GottaGoFast.RGBToHex(a, r, g, b);
+  GottaGoFast.db.profile.ObjectiveColor = GottaGoFast.RGBToHex(r, g, b, a);
   GottaGoFast.UpdateCMObjectives();
 end
 
@@ -159,7 +159,7 @@ function GottaGoFast.GetObjectiveCompleteColor(info)
 end
 
 function GottaGoFast.SetObjectiveCompleteColor(info, r, g, b, a)
-  GottaGoFast.db.profile.ObjectiveCompleteColor = GottaGoFast.RGBToHex(a, r, g, b);
+  GottaGoFast.db.profile.ObjectiveCompleteColor = GottaGoFast.RGBToHex(r, g, b, a);
   GottaGoFast.UpdateCMObjectives();
 end
 
@@ -179,15 +179,15 @@ function GottaGoFast.InitOptions()
       TimerY = 0,
       TimerFont = "Myriad Condensed Web",
       TimerFontSize = 29,
-      TimerColor = "00ffffff",
+      TimerColor = "ffffffff",
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
       ObjectiveFont = "Myriad Condensed Web",
       ObjectiveFontSize = 21,
       ObjectiveCollapsed = true,
-      ObjectiveColor = "00ffffff",
-      ObjectiveCompleteColor = "000ff000",
+      ObjectiveColor = "ffffffff",
+      ObjectiveCompleteColor = "ff0ff000",
     },
   }
   local options = {
@@ -348,7 +348,7 @@ function GottaGoFast.InitOptions()
             desc = "Default: White",
             get = GottaGoFast.GetObjectiveColor,
             set = GottaGoFast.SetObjectiveColor,
-            hasAlpha = true,
+            hasAlpha = false,
           },
           ObjectiveCompleteColor = {
             order = 14,
@@ -357,7 +357,7 @@ function GottaGoFast.InitOptions()
             desc = "Default: Green",
             get = GottaGoFast.GetObjectiveCompleteColor,
             set = GottaGoFast.SetObjectiveCompleteColor,
-            hasAlpha = true,
+            hasAlpha = false,
           },
           TimerColor = {
             order = 15,
@@ -366,7 +366,7 @@ function GottaGoFast.InitOptions()
             desc = "Default: White",
             get = GottaGoFast.GetTimerColor,
             set = GottaGoFast.SetTimerColor,
-            hasAlpha = true,
+            hasAlpha = false,
           },
           ObjectiveCollapsed = {
             order = 16,

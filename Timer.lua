@@ -140,10 +140,10 @@ function GottaGoFast.RGBToHex(r, g, b, a)
 	g = math.ceil(255 * g)
 	b = math.ceil(255 * b)
 	if a == nil then
-		return string.format("%02x%02x%02x", r, g, b)
+		return string.format("ff%02x%02x%02x", r, g, b)
 	else
 		a = math.ceil(255 * a)
-		return string.format("%02x%02x%02x%02x", r, g, b, a)
+		return string.format("%02x%02x%02x%02x", a, r, g, b)
 	end
 end
 
