@@ -135,8 +135,41 @@ function GottaGoFast.FormatTimeMS(time)
   return time;
 end
 
+function GottaGoFast.RGBToHex(r, g, b, a)
+	r = math.ceil(255 * r)
+	g = math.ceil(255 * g)
+	b = math.ceil(255 * b)
+	if a == nil then
+		return string.format("%02x%02x%02x", r, g, b)
+	else
+		a = math.ceil(255 * a)
+		return string.format("%02x%02x%02x%02x", r, g, b, a)
+	end
+end
+
+function GottaGoFast.HexToRGB(hex)
+	if string.len(hex) == 8 then
+		return tonumber("0x"..hex:sub(1,2)) / 255, tonumber("0x"..hex:sub(3,4)) / 255, tonumber("0x"..hex:sub(5,6)) / 255, tonumber("0x"..hex:sub(7,8)) / 255
+	else
+		return tonumber("0x"..hex:sub(1,2)) / 255, tonumber("0x"..hex:sub(3,4)) / 255, tonumber("0x"..hex:sub(5,6)) / 255
+	end
+end
+
+function GottaGoFast.ObjectiveString(boss, curValue, finalValue)
+  return string.format("|c%s%s - %d/%d|r", GottaGoFast.db.profile.ObjectiveColor, boss, curValue, finalValue);
+end
+
+
 function GottaGoFast.ObjectiveCompleteString(time)
-  return string.format("|c%s%s|r", "000ff000", time)
+  return string.format("%s", time);
+end
+
+function GottaGoFast.ObjectiveCompletedString(time)
+  return string.format("|c%s - |r|c%s%s|r", GottaGoFast.db.profile.ObjectiveColor, GottaGoFast.db.profile.ObjectiveCompleteColor, time);
+end
+
+function GottaGoFast.ColorTimer(time)
+  return string.format("|c%s%s|r", GottaGoFast.db.profile.TimerColor, time);
 end
 
 function GottaGoFast.HideObjectiveTracker()

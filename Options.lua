@@ -134,6 +134,34 @@ function GottaGoFast.SetObjectiveCollapsed(info, value)
   GottaGoFast.db.profile.ObjectiveCollapsed = value;
 end
 
+function GottaGoFast.GetTimerColor(info)
+  local a, r, g, b = GottaGoFast.HexToRGB(GottaGoFast.db.profile.TimerColor);
+  return r, g, b, a;
+end
+
+function GottaGoFast.SetTimerColor(info, r, g, b, a)
+  GottaGoFast.db.profile.TimerColor = GottaGoFast.RGBToHex(a, r, g, b);
+end
+
+function GottaGoFast.GetObjectiveColor(info)
+  local a, r, g, b = GottaGoFast.HexToRGB(GottaGoFast.db.profile.ObjectiveColor);
+  return r, g, b, a;
+end
+
+function GottaGoFast.SetObjectiveColor(info, r, g, b, a)
+  GottaGoFast.db.profile.ObjectiveColor = GottaGoFast.RGBToHex(a, r, g, b);
+  GottaGoFast.UpdateObjectives();
+end
+
+function GottaGoFast.GetObjectiveCompleteColor(info)
+  local a, r, g, b = GottaGoFast.HexToRGB(GottaGoFast.db.profile.ObjectiveCompleteColor);
+  return r, g, b, a;
+end
+
+function GottaGoFast.SetObjectiveCompleteColor(info, r, g, b, a)
+  GottaGoFast.db.profile.ObjectiveCompleteColor = GottaGoFast.RGBToHex(a, r, g, b);
+  GottaGoFast.UpdateObjectives();
+end
 
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
@@ -151,12 +179,15 @@ function GottaGoFast.InitOptions()
       TimerY = 0,
       TimerFont = "Myriad Condensed Web",
       TimerFontSize = 29,
+      TimerColor = "00ffffff",
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
       ObjectiveFont = "Myriad Condensed Web",
       ObjectiveFontSize = 21,
       ObjectiveCollapsed = true,
+      ObjectiveColor = "00ffffff",
+      ObjectiveCompleteColor = "000ff000",
     },
   }
   local options = {
@@ -310,8 +341,35 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetObjectiveFont,
             set = GottaGoFast.SetObjectiveFont,
           },
-          ObjectiveCollapsed = {
+          ObjectiveColor = {
             order = 13,
+            type = "color",
+            name = "Objective Color",
+            desc = "Default: White",
+            get = GottaGoFast.GetObjectiveColor,
+            set = GottaGoFast.SetObjectiveColor,
+            hasAlpha = true,
+          },
+          ObjectiveCompleteColor = {
+            order = 14,
+            type = "color",
+            name = "Objective Complete Color",
+            desc = "Default: Green",
+            get = GottaGoFast.GetObjectiveCompleteColor,
+            set = GottaGoFast.SetObjectiveCompleteColor,
+            hasAlpha = true,
+          },
+          TimerColor = {
+            order = 15,
+            type = "color",
+            name = "Timer Color",
+            desc = "Default: White",
+            get = GottaGoFast.GetTimerColor,
+            set = GottaGoFast.SetTimerColor,
+            hasAlpha = true,
+          },
+          ObjectiveCollapsed = {
+            order = 16,
             type = "toggle",
             name = "Objective Tracker Collapse",
             desc = "Collapse Objective Tracker When Leaving CM / Timewalker",

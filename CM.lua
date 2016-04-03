@@ -25,7 +25,7 @@ function GottaGoFast.SetupCM(currentZoneID)
     GottaGoFast.CurrentCM["FinalValues"][i] = finalValue;
     GottaGoFast.CurrentCM["Bosses"][i] = name;
   end
-  
+
   GottaGoFast.HideObjectiveTracker();
 end
 
@@ -44,7 +44,6 @@ function GottaGoFast.UpdateCMInformation()
           GottaGoFast.CurrentCM["CurrentValues"][i] = curValue;
           if (curValue == finalValue) then
             -- Add Objective Time
-
             GottaGoFast.CurrentCM["ObjectiveTimes"][i] = GottaGoFast.ObjectiveCompleteString(GottaGoFast.CurrentCM["Time"]);
           end
         elseif (GottaGoFast.CurrentCM["CurrentValues"][i] == GottaGoFast.CurrentCM["FinalValues"][i] and not GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
@@ -115,7 +114,7 @@ function GottaGoFast.UpdateTimer()
       end
 
       -- Update Frame
-      GottaGoFastTimerFrame.font:SetText(time);
+      GottaGoFastTimerFrame.font:SetText(GottaGoFast.ColorTimer(time));
       GottaGoFast.ResizeFrame();
     end
   end
@@ -125,10 +124,10 @@ function GottaGoFast.UpdateObjectives()
   if (GottaGoFast.CurrentCM) then
     local objectiveString = "";
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
-      objectiveString = objectiveString .. string.format("%s - %d/%d", GottaGoFast.CurrentCM["Bosses"][i], GottaGoFast.CurrentCM["CurrentValues"][i], GottaGoFast.CurrentCM["FinalValues"][i]);
+      objectiveString = objectiveString .. GottaGoFast.ObjectiveString(GottaGoFast.CurrentCM["Bosses"][i], GottaGoFast.CurrentCM["CurrentValues"][i], GottaGoFast.CurrentCM["FinalValues"][i]);
       if (GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
         -- Completed Objective
-        objectiveString = objectiveString .. string.format(" - %s", GottaGoFast.CurrentCM["ObjectiveTimes"][i]);
+        objectiveString = objectiveString .. GottaGoFast.ObjectiveCompletedString(GottaGoFast.CurrentCM["ObjectiveTimes"][i]);
       end
       objectiveString = objectiveString .. "\n";
     end
