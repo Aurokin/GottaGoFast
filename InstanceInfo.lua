@@ -1,6 +1,6 @@
--- WoD CMs
 GottaGoFastInstanceInfo = {};
 
+-- WoD CMs
 GottaGoFastInstanceInfo[1195] = {};
 GottaGoFastInstanceInfo[1195]["Name"] = "Iron Docks";
 GottaGoFastInstanceInfo[1195]["GoldTimer"] = 1200;
@@ -32,3 +32,53 @@ GottaGoFastInstanceInfo[1176]["GoldTimer"] = 1050;
 GottaGoFastInstanceInfo[1358] = {};
 GottaGoFastInstanceInfo[1358]["Name"] = "Upper Blackrock Spire";
 GottaGoFastInstanceInfo[1358]["GoldTimer"] = 1500;
+
+-- Cataclysm Dungeons
+GottaGoFastInstanceInfo[670] = {};
+GottaGoFastInstanceInfo[670]["name"] = "Grim Batol";
+GottaGoFastInstanceInfo[670]["startingArea"] = {};
+GottaGoFastInstanceInfo[670]["startingArea"]["x"] = -624.2;
+GottaGoFastInstanceInfo[670]["startingArea"]["y"] = -189.4;
+GottaGoFastInstanceInfo[670]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[938] = {};
+GottaGoFastInstanceInfo[938]["name"] = "End Time";
+GottaGoFastInstanceInfo[938]["startingArea"] = {};
+GottaGoFastInstanceInfo[938]["startingArea"]["x"] = 3724.7;
+GottaGoFastInstanceInfo[938]["startingArea"]["y"] = -400.7;
+GottaGoFastInstanceInfo[938]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[643] = {};
+GottaGoFastInstanceInfo[643]["name"] = "Throne of the Tides";
+GottaGoFastInstanceInfo[643]["startingArea"] = {};
+GottaGoFastInstanceInfo[643]["startingArea"]["x"] = -601.2;
+GottaGoFastInstanceInfo[643]["startingArea"]["y"] = 809.5;
+GottaGoFastInstanceInfo[643]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[644] = {};
+GottaGoFastInstanceInfo[644]["name"] = "Halls of Origination";
+GottaGoFastInstanceInfo[644]["startingArea"] = {};
+GottaGoFastInstanceInfo[644]["startingArea"]["x"] = -954.1;
+GottaGoFastInstanceInfo[644]["startingArea"]["y"] = 462.4;
+GottaGoFastInstanceInfo[644]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[755] = {};
+GottaGoFastInstanceInfo[755]["name"] = "Lost City of Tol'Vir";
+GottaGoFastInstanceInfo[755]["startingArea"] = {};
+GottaGoFastInstanceInfo[755]["startingArea"]["x"] = -10700.4;
+GottaGoFastInstanceInfo[755]["startingArea"]["y"] = -1312.7;
+GottaGoFastInstanceInfo[755]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[657] = {};
+GottaGoFastInstanceInfo[657]["name"] = "The Vortex Pinnacle";
+GottaGoFastInstanceInfo[657]["startingArea"] = {};
+GottaGoFastInstanceInfo[657]["startingArea"]["x"] = -337.6;
+GottaGoFastInstanceInfo[657]["startingArea"]["y"] = 15.3;
+GottaGoFastInstanceInfo[657]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[725] = {};
+GottaGoFastInstanceInfo[725]["name"] = "The Stonecore";
+GottaGoFastInstanceInfo[725]["startingArea"] = {};
+GottaGoFastInstanceInfo[725]["startingArea"]["x"] = 851.1;
+GottaGoFastInstanceInfo[725]["startingArea"]["y"] = 986.5;
+GottaGoFastInstanceInfo[725]["startingArea"]["safeZone"] = 20;

@@ -55,7 +55,7 @@ function GottaGoFast.UpdateCMInformation()
   end
 end
 
-function GottaGoFast.FinalParse()
+function GottaGoFast.CMFinalParse()
   if (GottaGoFast.CurrentCM) then
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
       GottaGoFast.CurrentCM["CurrentValues"][i] = GottaGoFast.CurrentCM["FinalValues"][i];
@@ -81,7 +81,7 @@ end
 function GottaGoFast.CompleteCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM["Completed"] = true;
-    GottaGoFast.FinalParse();
+    GottaGoFast.CMFinalParse();
   end
 end
 

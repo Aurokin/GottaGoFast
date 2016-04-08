@@ -62,7 +62,15 @@ function GottaGoFast:SCENARIO_POI_UPDATE()
     GottaGoFast.UpdateCMInformation();
     GottaGoFast.UpdateCMObjectives();
   elseif (GottaGoFast.inTW) then
-    --self:Print("Scenario POI Update");
+    self:Print("Scenario POI Update");
+    if (GottaGoFast.CurrentTW["Steps"] == 0 and GottaGoFast.CurrentTW["Completed"] == false and next(GottaGoFast.CurrentTW["Bosses"]) == nil) then
+      -- Timewalking Must Be Resetup If You Enter First
+      local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
+      GottaGoFast.WipeTW();
+      GottaGoFast.SetupTW(currentZoneID);
+    end
+    GottaGoFast.UpdateTWInformation();
+    GottaGoFast.UpdateTWObjectives();
   end
 end
 
@@ -93,13 +101,18 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.inTW = false;
     GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
     GottaGoFast.ShowFrames();
-  elseif (difficulty == 24) then
+  elseif (difficulty == 1 and GottaGoFastInstanceInfo[currentZoneID]) then
+    -- Difficutly 24 for Timewalking
     GottaGoFast:Print("Player Entered Timewalking Dungeon");
+    GottaGoFast.WipeTW();
+    GottaGoFast.SetupTW(currentZoneID);
+    GottaGoFast.UpdateTWTimer();
+    GottaGoFast.UpdateTWObjectives();
     GottaGoFast.inCM = false;
     GottaGoFast.inTW = true;
     GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
     -- Hiding Frames For Now
-    GottaGoFast.HideFrames();
+    GottaGoFast.ShowFrames();
   else
     GottaGoFast.WipeCM();
     GottaGoFast.inCM = false;
