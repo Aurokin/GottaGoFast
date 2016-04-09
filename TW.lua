@@ -11,6 +11,7 @@ function GottaGoFast.SetupTW(currentZoneID)
   local _, _, steps = C_Scenario.GetStepInfo();
   GottaGoFast.CurrentTW = {};
   GottaGoFast.CurrentTW["StartTime"] = nil;
+  GottaGoFast.CurrentTW["CurrentTime"] = nil;
   GottaGoFast.CurrentTW["Time"] = nil;
   GottaGoFast.CurrentTW["LateStart"] = false;
   GottaGoFast.CurrentTW["String"] = nil;
@@ -38,6 +39,11 @@ function GottaGoFast.SetupTW(currentZoneID)
     GottaGoFast.CurrentTW["LateStart"] = true;
   end
 
+  if (GottaGoFast.CurrentTW["LateStart"] == true) then
+    GottaGoFast:Print("Asked To Fix Timer");
+    GottaGoFast:SendCommMessage("GottaGoFast", "FixMyTimer", "PARTY", nil, "ALERT");
+  end
+
   GottaGoFast.HideObjectiveTracker();
 end
 
@@ -60,6 +66,7 @@ function GottaGoFast.UpdateTWTimer()
       local startMin, startSec;
       local currentTime = GetTime();
       local secs = currentTime - GottaGoFast.CurrentTW["StartTime"];
+      GottaGoFast.CurrentTW["CurrentTime"] = secs;
       startMin, startSec = GottaGoFast.SecondsToTime(secs);
       if (GottaGoFast.CurrentTW["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         startMin = GottaGoFast.FormatTimeNoMS(startMin);
@@ -77,6 +84,8 @@ function GottaGoFast.UpdateTWTimer()
       -- Update Frame
       GottaGoFastTimerFrame.font:SetText(GottaGoFast.ColorTimer(time));
       GottaGoFast.ResizeFrame();
+    else
+      GottaGoFastTimerFrame.font:SetText(GottaGoFast.ColorTimer(GottaGoFast.CurrentTW["Time"]));
     end
   else
     GottaGoFastTimerFrame.font:SetText(GottaGoFast.ColorTimer("00:00"));

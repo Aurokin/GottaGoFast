@@ -1,4 +1,4 @@
-GottaGoFast = LibStub("AceAddon-3.0"):NewAddon("GottaGoFast", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0");
+GottaGoFast = LibStub("AceAddon-3.0"):NewAddon("GottaGoFast", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceSerializer-3.0", "AceComm-3.0");
 
 function GottaGoFast:OnInitialize()
     -- Called when the addon is loaded
@@ -14,6 +14,7 @@ function GottaGoFast:OnEnable()
     -- Called when the addon is enabled
 
     -- Register Events
+    RegisterAddonMessagePrefix("GottaGoFast");
     self:RegisterEvent("CHALLENGE_MODE_START");
     self:RegisterEvent("CHALLENGE_MODE_COMPLETED");
     self:RegisterEvent("CHALLENGE_MODE_RESET");
@@ -22,6 +23,7 @@ function GottaGoFast:OnEnable()
     self:RegisterEvent("GOSSIP_SHOW");
     self:RegisterChatCommand("ggf", "ChatCommand");
     self:RegisterChatCommand("GottaGoFast", "ChatCommand");
+    self:RegisterComm("GottaGoFast", "ChatComm");
 
     -- Setup AddOn
     GottaGoFast.InitState();
@@ -83,6 +85,37 @@ end
 function GottaGoFast:ChatCommand(input)
   InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
   InterfaceOptionsFrame_OpenToCategory(GottaGoFast.optionsFrame);
+end
+
+function GottaGoFast:ChatComm(prefix, input, distribution, sender)
+  -- Right Now This Is Only Used For Syncing Timer
+  GottaGoFast:Print("Message Received");
+  if (input == "FixMyTimer" and GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
+    -- Someone asked for a timer, send it to them!
+    if (GottaGoFast.CurrentTW["LateStart"] == false and GottaGoFast.CurrentTW["StartTime"] and GottaGoFast.CurrentTW["CurrentTime"]) then
+      local CurrentTWString = GottaGoFast:Serialize(GottaGoFast.CurrentTW);
+      GottaGoFast:Print("Timer Sent");
+      GottaGoFast:SendCommMessage("GottaGoFast", CurrentTWString, "PARTY", nil, "ALERT");
+    end
+  else
+    -- Received Timer, See If You Need It, Then Update
+    if (GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
+      if (GottaGoFast.CurrentTW["LateStart"] == true) then
+        GottaGoFast:Print("Replacing Timer");
+        -- Set Table
+        GottaGoFast:Deserialize(input);
+        local DIW, ETW = GottaGoFast:Deserialize(input);
+        if (DIW) then
+          local CurrentTime = GetTime();
+          ETW["StartTime"] = CurrentTime - ETW["CurrentTime"];
+          GottaGoFast.CurrentTW = ETW;
+          -- Update Timer
+          GottaGoFast.UpdateTWTimer();
+          GottaGoFast.UpdateTWObjectives();
+        end
+      end
+    end
+  end
 end
 
 function GottaGoFast.WhereAmI()
