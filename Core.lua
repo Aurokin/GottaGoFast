@@ -64,7 +64,7 @@ function GottaGoFast:SCENARIO_POI_UPDATE()
     GottaGoFast.UpdateCMInformation();
     GottaGoFast.UpdateCMObjectives();
   elseif (GottaGoFast.inTW) then
-    self:Print("Scenario POI Update");
+    --Self:Print("Scenario POI Update");
     if (GottaGoFast.CurrentTW["Steps"] == 0 and GottaGoFast.CurrentTW["Completed"] == false and next(GottaGoFast.CurrentTW["Bosses"]) == nil) then
       -- Timewalking Must Be Resetup If You Enter First
       local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
@@ -89,19 +89,19 @@ end
 
 function GottaGoFast:ChatComm(prefix, input, distribution, sender)
   -- Right Now This Is Only Used For Syncing Timer
-  GottaGoFast:Print("Message Received");
+  --GottaGoFast:Print("Message Received");
   if (input == "FixMyTimer" and GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
     -- Someone asked for a timer, send it to them!
     if (GottaGoFast.CurrentTW["LateStart"] == false and GottaGoFast.CurrentTW["StartTime"] and GottaGoFast.CurrentTW["CurrentTime"]) then
       local CurrentTWString = GottaGoFast:Serialize(GottaGoFast.CurrentTW);
-      GottaGoFast:Print("Timer Sent");
+      --GottaGoFast:Print("Timer Sent");
       GottaGoFast:SendCommMessage("GottaGoFast", CurrentTWString, "PARTY", nil, "ALERT");
     end
   else
     -- Received Timer, See If You Need It, Then Update
     if (GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
       if (GottaGoFast.CurrentTW["LateStart"] == true) then
-        GottaGoFast:Print("Replacing Timer");
+        --GottaGoFast:Print("Replacing Timer");
         -- Set Table
         GottaGoFast:Deserialize(input);
         local DIW, ETW = GottaGoFast:Deserialize(input);
@@ -125,7 +125,7 @@ function GottaGoFast.WhereAmI()
   if (difficulty == 0 and GottaGoFastInstanceInfo[currentZoneID]) then
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
   elseif (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
-    GottaGoFast:Print("Player Entered Challenge Mode");
+    --GottaGoFast:Print("Player Entered Challenge Mode");
     GottaGoFast.WipeCM();
     GottaGoFast.SetupCM(currentZoneID);
     GottaGoFast.UpdateCMTimer();
@@ -136,7 +136,7 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.ShowFrames();
   elseif (difficulty == 1 and GottaGoFastInstanceInfo[currentZoneID]) then
     -- Difficutly 24 for Timewalking
-    GottaGoFast:Print("Player Entered Timewalking Dungeon");
+    --GottaGoFast:Print("Player Entered Timewalking Dungeon");
     GottaGoFast.WipeTW();
     GottaGoFast.SetupTW(currentZoneID);
     GottaGoFast.UpdateTWTimer();

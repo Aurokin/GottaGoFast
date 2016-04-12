@@ -40,7 +40,7 @@ function GottaGoFast.SetupTW(currentZoneID)
   end
 
   if (GottaGoFast.CurrentTW["LateStart"] == true) then
-    GottaGoFast:Print("Asked To Fix Timer");
+    --GottaGoFast:Print("Asked To Fix Timer");
     GottaGoFast:SendCommMessage("GottaGoFast", "FixMyTimer", "PARTY", nil, "ALERT");
   end
 
