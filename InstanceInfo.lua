@@ -82,3 +82,46 @@ GottaGoFastInstanceInfo[725]["startingArea"] = {};
 GottaGoFastInstanceInfo[725]["startingArea"]["x"] = 851.1;
 GottaGoFastInstanceInfo[725]["startingArea"]["y"] = 986.5;
 GottaGoFastInstanceInfo[725]["startingArea"]["safeZone"] = 20;
+
+-- Burning Crusade Dungeons
+GottaGoFastInstanceInfo[585] = {};
+GottaGoFastInstanceInfo[585]["name"] = "Magisters' Terrace";
+GottaGoFastInstanceInfo[585]["startingArea"] = {};
+GottaGoFastInstanceInfo[585]["startingArea"]["x"] = 10.2;
+GottaGoFastInstanceInfo[585]["startingArea"]["y"] = 0.4;
+GottaGoFastInstanceInfo[585]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[557] = {};
+GottaGoFastInstanceInfo[557]["name"] = "Mana-Tombs";
+GottaGoFastInstanceInfo[557]["startingArea"] = {};
+GottaGoFastInstanceInfo[557]["startingArea"]["x"] = -4.8;
+GottaGoFastInstanceInfo[557]["startingArea"]["y"] = 1;
+GottaGoFastInstanceInfo[557]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[552] = {};
+GottaGoFastInstanceInfo[552]["name"] = "The Arcatraz";
+GottaGoFastInstanceInfo[552]["startingArea"] = {};
+GottaGoFastInstanceInfo[552]["startingArea"]["x"] = 8.6;
+GottaGoFastInstanceInfo[552]["startingArea"]["y"] = 0;
+GottaGoFastInstanceInfo[552]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[269] = {};
+GottaGoFastInstanceInfo[269]["name"] = "The Black Morass";
+GottaGoFastInstanceInfo[269]["startingArea"] = {};
+GottaGoFastInstanceInfo[269]["startingArea"]["x"] = -1490.1;
+GottaGoFastInstanceInfo[269]["startingArea"]["y"] = 7053.7;
+GottaGoFastInstanceInfo[269]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[540] = {};
+GottaGoFastInstanceInfo[540]["name"] = "The Shattered Halls";
+GottaGoFastInstanceInfo[540]["startingArea"] = {};
+GottaGoFastInstanceInfo[540]["startingArea"]["x"] = -40.7;
+GottaGoFastInstanceInfo[540]["startingArea"]["y"] = -19.3;
+GottaGoFastInstanceInfo[540]["startingArea"]["safeZone"] = 20;
+
+GottaGoFastInstanceInfo[547] = {};
+GottaGoFastInstanceInfo[547]["name"] = "The Slave Pens";
+GottaGoFastInstanceInfo[547]["startingArea"] = {};
+GottaGoFastInstanceInfo[547]["startingArea"]["x"] = 122.4;
+GottaGoFastInstanceInfo[547]["startingArea"]["y"] = -123.6;
+GottaGoFastInstanceInfo[547]["startingArea"]["safeZone"] = 20;
