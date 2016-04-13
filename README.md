@@ -1,7 +1,6 @@
 # Gotta Go Fast
-CM Timer!
+CM And Timewalking Timer!
 
 # To Do List
-- Implement Timewalking Timer
 
 # Bugs
