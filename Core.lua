@@ -56,6 +56,7 @@ end
 function GottaGoFast:PLAYER_ENTERING_WORLD()
   --self:Print("Player Entered World");
   GottaGoFast.CheckCount = 0;
+  GottaGoFast.FirstCheck = false;
   GottaGoFast.WhereAmI();
 end
 
@@ -123,28 +124,35 @@ function GottaGoFast.WhereAmI()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
   --GottaGoFast:Print("Difficulty: " .. difficulty);
   --GottaGoFast:Print("Zone ID: " .. currentZoneID);
-  if (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
-    --GottaGoFast:Print("Player Entered Challenge Mode");
-    GottaGoFast.WipeCM();
-    GottaGoFast.SetupCM(currentZoneID);
-    GottaGoFast.UpdateCMTimer();
-    GottaGoFast.UpdateCMObjectives();
-    GottaGoFast.inCM = true;
-    GottaGoFast.inTW = false;
-    GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
-    GottaGoFast.ShowFrames();
+  if (GottaGoFast.FirstCheck == false) then
+    GottaGoFast.FirstCheck = true;
+    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
+  elseif (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
+    if (GottaGoFastInstanceInfo[currentZoneID]["CM"]) then
+      --GottaGoFast:Print("Player Entered Challenge Mode");
+      GottaGoFast.WipeCM();
+      GottaGoFast.SetupCM(currentZoneID);
+      GottaGoFast.UpdateCMTimer();
+      GottaGoFast.UpdateCMObjectives();
+      GottaGoFast.inCM = true;
+      GottaGoFast.inTW = false;
+      GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
+      GottaGoFast.ShowFrames();
+    end
   elseif (difficulty == 24 and GottaGoFastInstanceInfo[currentZoneID]) then
     -- Difficutly 24 for Timewalking
-    --GottaGoFast:Print("Player Entered Timewalking Dungeon");
-    GottaGoFast.WipeTW();
-    GottaGoFast.SetupTW(currentZoneID);
-    GottaGoFast.UpdateTWTimer();
-    GottaGoFast.UpdateTWObjectives();
-    GottaGoFast.inCM = false;
-    GottaGoFast.inTW = true;
-    GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
-    -- Hiding Frames For Now
-    GottaGoFast.ShowFrames();
+    if (GottaGoFastInstanceInfo[currentZoneID]["TW"]) then
+      --GottaGoFast:Print("Player Entered Timewalking Dungeon");
+      GottaGoFast.WipeTW();
+      GottaGoFast.SetupTW(currentZoneID);
+      GottaGoFast.UpdateTWTimer();
+      GottaGoFast.UpdateTWObjectives();
+      GottaGoFast.inCM = false;
+      GottaGoFast.inTW = true;
+      GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
+      -- Hiding Frames For Now
+      GottaGoFast.ShowFrames();
+    end
   elseif (GottaGoFast.CheckCount < 20 and GottaGoFastInstanceInfo[currentZoneID]) then
     GottaGoFast.CheckCount = GottaGoFast.CheckCount + 1;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
