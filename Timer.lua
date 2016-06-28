@@ -4,7 +4,20 @@ function GottaGoFast.InitState()
   GottaGoFast.inCM = false;
   GottaGoFast.minWidth = 200;
   GottaGoFast.unlocked = false;
+  GottaGoFast.defaultTooltip = "Not In A CM";
+  GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
 end
+
+function GottaGoFast.TooltipOnEnter(self)
+  GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+  GameTooltip:SetText(GottaGoFast.tooltip, nil, nil, nil, nil, 1);
+  GameTooltip:Show();
+end
+
+function GottaGoFast.TooltipOnLeave(self)
+  GameTooltip_Hide();
+end
+
 
 function GottaGoFast.InitFrame()
   -- Register Textures
@@ -73,9 +86,13 @@ function GottaGoFast.InitFrame()
   GottaGoFastFrame.texture:SetAllPoints(GottaGoFastFrame);
   GottaGoFastFrame.texture:SetTexture(0.5, 0.5, 0.5, 0);
   GottaGoFastTimerFrame.texture:SetAllPoints(GottaGoFastTimerFrame);
-  GottaGoFastTimerFrame.texture:SetTexture(1, 0, 0, 0);
+  GottaGoFastTimerFrame.texture:SetTexture(0, 1, 0, 0);
   GottaGoFastObjectiveFrame.texture:SetAllPoints(GottaGoFastObjectiveFrame);
   GottaGoFastObjectiveFrame.texture:SetTexture(0, 1, 0, 0);
+
+  -- Create Tooltip
+  GottaGoFastTimerFrame:SetScript("OnEnter", GottaGoFast.TooltipOnEnter);
+  GottaGoFastTimerFrame:SetScript("OnLeave", GottaGoFast.TooltipOnLeave);
 
 end
 
@@ -157,6 +174,10 @@ end
 
 function GottaGoFast.ObjectiveString(boss, curValue, finalValue)
   return string.format("|c%s%s - %d/%d|r", GottaGoFast.db.profile.ObjectiveColor, boss, curValue, finalValue);
+end
+
+function GottaGoFast.ObjectiveEnemyString(boss, curValue)
+  return string.format("|c%s%s - %d%%|r", GottaGoFast.db.profile.ObjectiveColor, boss, curValue, finalValue);
 end
 
 

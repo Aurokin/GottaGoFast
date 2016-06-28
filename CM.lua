@@ -5,13 +5,33 @@ function GottaGoFast.UpdateCM()
   end
 end
 
+function GottaGoFast.BuildCMTooltip()
+  local newTooltip;
+  local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();
+  if (cmLevel) then
+    newTooltip = "Level " .. cmLevel .. "\n\n";
+    for i, affixID in ipairs(affixes) do
+      local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
+      newTooltip = newTooltip .. affixName .. "\n";
+    end
+    if (empowered) then
+      newTooltip = newTooltip .. "\nEmpowered!";
+    else
+      newTooltip = newTooltip .. "\nDepleated";
+    end
+    GottaGoFast.tooltip = newTooltip;
+  else
+    GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
+  end
+end
+
 function GottaGoFast.SetupCM(currentZoneID)
   local _, _, steps = C_Scenario.GetStepInfo();
   GottaGoFast.CurrentCM = {};
   GottaGoFast.CurrentCM["StartTime"] = nil;
   GottaGoFast.CurrentCM["Time"] = nil;
   GottaGoFast.CurrentCM["String"] = nil;
-  GottaGoFast.CurrentCM["GoldTimer"] = GottaGoFastInstanceInfo[currentZoneID]["GoldTimer"];
+  GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["GoldTimer"] = C_ChallengeMode.GetMapInfo(currentZoneID);
   GottaGoFast.CurrentCM["Steps"] = steps;
   GottaGoFast.CurrentCM["Completed"] = false;
   GottaGoFast.CurrentCM["CurrentValues"] = {};
@@ -24,8 +44,12 @@ function GottaGoFast.SetupCM(currentZoneID)
     GottaGoFast.CurrentCM["CurrentValues"][i] = curValue;
     GottaGoFast.CurrentCM["FinalValues"][i] = finalValue;
     GottaGoFast.CurrentCM["Bosses"][i] = name;
+    if (i == steps) then
+      GottaGoFast.CurrentCM["FinalValues"][i] = 100;
+    end
   end
 
+  GottaGoFast.BuildCMTooltip();
   GottaGoFast.HideObjectiveTracker();
 end
 
@@ -42,7 +66,7 @@ function GottaGoFast.UpdateCMInformation()
         if (GottaGoFast.CurrentCM["CurrentValues"][i] ~= curValue) then
           -- Update Value
           GottaGoFast.CurrentCM["CurrentValues"][i] = curValue;
-          if (curValue == finalValue) then
+          if (curValue == finalValue or ((i == GottaGoFast.CurrentCM["Steps"]) and (curValue == GottaGoFast.CurrentCM["FinalValues"][i]))) then
             -- Add Objective Time
             GottaGoFast.CurrentCM["ObjectiveTimes"][i] = GottaGoFast.ObjectiveCompleteString(GottaGoFast.CurrentCM["Time"]);
           end
@@ -72,9 +96,10 @@ function GottaGoFast.WipeCM()
   end
 end
 
-function GottaGoFast.StartCM()
+function GottaGoFast.StartCM(offset)
   if (GottaGoFast.CurrentCM) then
-    GottaGoFast.CurrentCM["StartTime"] = GetTime();
+    GottaGoFast.CurrentCM["StartTime"] = GetTime() + offset;
+    GottaGoFast.BuildCMTooltip();
   end
 end
 
@@ -93,9 +118,14 @@ function GottaGoFast.UpdateCMTimer()
       if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
         local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
-        startMin, startSec = GottaGoFast.SecondsToTime(secs);
-        startMin = GottaGoFast.FormatTimeNoMS(startMin);
-        startSec = GottaGoFast.FormatTimeMS(startSec);
+        if (secs < 0) then
+          startMin = "-00";
+          startSec = GottaGoFast.FormatTimeMS(math.abs(secs));
+        else
+          startMin, startSec = GottaGoFast.SecondsToTime(secs);
+          startMin = GottaGoFast.FormatTimeNoMS(startMin);
+          startSec = GottaGoFast.FormatTimeMS(startSec);
+        end
       else
         _, timeCM = GetWorldElapsedTime(1);
         startMin, startSec = GottaGoFast.SecondsToTime(timeCM);
@@ -124,7 +154,12 @@ function GottaGoFast.UpdateCMObjectives()
   if (GottaGoFast.CurrentCM) then
     local objectiveString = "";
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
-      objectiveString = objectiveString .. GottaGoFast.ObjectiveString(GottaGoFast.CurrentCM["Bosses"][i], GottaGoFast.CurrentCM["CurrentValues"][i], GottaGoFast.CurrentCM["FinalValues"][i]);
+      if (i == GottaGoFast.CurrentCM["Steps"]) then
+        -- Last Step Should Be Enemies
+        objectiveString = objectiveString .. GottaGoFast.ObjectiveEnemyString(GottaGoFast.CurrentCM["Bosses"][i], GottaGoFast.CurrentCM["CurrentValues"][i]);
+      else
+        objectiveString = objectiveString .. GottaGoFast.ObjectiveString(GottaGoFast.CurrentCM["Bosses"][i], GottaGoFast.CurrentCM["CurrentValues"][i], GottaGoFast.CurrentCM["FinalValues"][i]);
+      end
       if (GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
         -- Completed Objective
         objectiveString = objectiveString .. GottaGoFast.ObjectiveCompletedString(GottaGoFast.CurrentCM["ObjectiveTimes"][i]);

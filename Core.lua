@@ -20,6 +20,7 @@ function GottaGoFast:OnEnable()
     self:RegisterEvent("CHALLENGE_MODE_RESET");
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("SCENARIO_POI_UPDATE");
+    self:RegisterEvent("WORLD_STATE_TIMER_START");
     self:RegisterEvent("GOSSIP_SHOW");
     self:RegisterChatCommand("ggf", "ChatCommand");
     self:RegisterChatCommand("GottaGoFast", "ChatCommand");
@@ -38,7 +39,10 @@ end
 
 function GottaGoFast:CHALLENGE_MODE_START()
   --self:Print("CM Start");
-  GottaGoFast.StartCM();
+  if (GottaGoFast.inCM == false) then
+    GottaGoFast.WhereAmI();
+  end
+  GottaGoFast.StartCM(10);
 end
 
 function GottaGoFast:CHALLENGE_MODE_COMPLETED()
@@ -63,6 +67,9 @@ end
 function GottaGoFast:SCENARIO_POI_UPDATE()
   if (GottaGoFast.inCM) then
     --self:Print("Scenario POI Update");
+    if (GottaGoFast.CurrentCM["Steps"] == 0 and GottaGoFast.CurrentCM["Completed"] == false and next(GottaGoFast.CurrentCM["Bosses"]) == nil) then
+      GottaGoFast.WhereAmI();
+    end
     GottaGoFast.UpdateCMInformation();
     GottaGoFast.UpdateCMObjectives();
   elseif (GottaGoFast.inTW) then
@@ -75,6 +82,12 @@ function GottaGoFast:SCENARIO_POI_UPDATE()
     end
     GottaGoFast.UpdateTWInformation();
     GottaGoFast.UpdateTWObjectives();
+  end
+end
+
+function GottaGoFast:WORLD_STATE_TIMER_START()
+  if (GottaGoFast.inCM == true and GottaGoFast.CurrentCM["Completed"] == false) then
+    GottaGoFast.StartCM(0);
   end
 end
 
@@ -127,18 +140,22 @@ function GottaGoFast.WhereAmI()
   if (GottaGoFast.FirstCheck == false) then
     GottaGoFast.FirstCheck = true;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
-  elseif (difficulty == 8 and GottaGoFastInstanceInfo[currentZoneID]) then
-    if (GottaGoFastInstanceInfo[currentZoneID]["CM"]) then
+  elseif (difficulty == 8) then
       --GottaGoFast:Print("Player Entered Challenge Mode");
       GottaGoFast.WipeCM();
+      --GottaGoFast:Print("Wiping CM");
       GottaGoFast.SetupCM(currentZoneID);
+      --GottaGoFast:Print("Setting Up CM");
       GottaGoFast.UpdateCMTimer();
+      --GottaGoFast:Print("Setting Up Timer");
       GottaGoFast.UpdateCMObjectives();
+      --GottaGoFast:Print("Setting Up Objectives");
       GottaGoFast.inCM = true;
       GottaGoFast.inTW = false;
       GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
+      --GottaGoFast:Print("Setting Up Update Script");
       GottaGoFast.ShowFrames();
-    end
+      --GottaGoFast:Print("Showing Frames");
   elseif (difficulty == 24 and GottaGoFastInstanceInfo[currentZoneID]) then
     -- Difficutly 24 for Timewalking
     if (GottaGoFastInstanceInfo[currentZoneID]["TW"]) then
@@ -158,8 +175,10 @@ function GottaGoFast.WhereAmI()
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
   else
     GottaGoFast.WipeCM();
+    GottaGoFast.WipeTW();
     GottaGoFast.inCM = false;
     GottaGoFast.inTW = false;
+    GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
     GottaGoFastFrame:SetScript("OnUpdate", nil);
     GottaGoFast.HideFrames();
     GottaGoFast.ShowObjectiveTracker();
