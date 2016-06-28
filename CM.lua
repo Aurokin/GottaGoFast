@@ -27,17 +27,25 @@ end
 
 function GottaGoFast.SetupCM(currentZoneID)
   local _, _, steps = C_Scenario.GetStepInfo();
+  local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();
   GottaGoFast.CurrentCM = {};
   GottaGoFast.CurrentCM["StartTime"] = nil;
   GottaGoFast.CurrentCM["Time"] = nil;
   GottaGoFast.CurrentCM["String"] = nil;
   GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["GoldTimer"] = C_ChallengeMode.GetMapInfo(currentZoneID);
   GottaGoFast.CurrentCM["Steps"] = steps;
+  GottaGoFast.CurrentCM["Level"] = cmLevel;
   GottaGoFast.CurrentCM["Completed"] = false;
+  GottaGoFast.CurrentCM["Affixes"] = {};
   GottaGoFast.CurrentCM["CurrentValues"] = {};
   GottaGoFast.CurrentCM["FinalValues"] = {};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
   GottaGoFast.CurrentCM["Bosses"] = {};
+
+  for i, affixID in ipairs(affixes) do
+    local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
+    GottaGoFast.CurrentCM["Affixes"][affixID] = affixName;
+  end
 
   for i = 1, steps do
     local name, _, status, curValue, finalValue = C_Scenario.GetCriteriaInfo(i);
