@@ -185,6 +185,10 @@ function GottaGoFast.ObjectiveCompleteString(time)
   return string.format("%s", time);
 end
 
+function GottaGoFast.ObjectiveExtraString(value)
+  return string.format("|c%s%s|r", GottaGoFast.db.profile.ObjectiveColor, value);
+end
+
 function GottaGoFast.ObjectiveCompletedString(time)
   return string.format("|c%s - |r|c%s%s|r", GottaGoFast.db.profile.ObjectiveColor, GottaGoFast.db.profile.ObjectiveCompleteColor, time);
 end

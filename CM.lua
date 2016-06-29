@@ -35,12 +35,17 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["GoldTimer"] = C_ChallengeMode.GetMapInfo(currentZoneID);
   GottaGoFast.CurrentCM["Steps"] = steps;
   GottaGoFast.CurrentCM["Level"] = cmLevel;
+  GottaGoFast.CurrentCM["Bonus"] = "?";
   GottaGoFast.CurrentCM["Completed"] = false;
   GottaGoFast.CurrentCM["Affixes"] = {};
   GottaGoFast.CurrentCM["CurrentValues"] = {};
   GottaGoFast.CurrentCM["FinalValues"] = {};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
   GottaGoFast.CurrentCM["Bosses"] = {};
+
+  if (cmLevel) then
+    GottaGoFast.CurrentCM["Bonus"] = C_ChallengeMode.GetPowerLevelDamageHealthMod(cmLevel);
+  end
 
   for i, affixID in ipairs(affixes) do
     local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
@@ -151,6 +156,10 @@ function GottaGoFast.UpdateCMTimer()
         time = time .. "/ " .. goldMin .. ":" .. goldSec;
       end
 
+      if (GottaGoFast.db.profile.LevelInTimer and GottaGoFast.CurrentCM["Level"]) then
+        time = "[" .. GottaGoFast.CurrentCM["Level"] .. "] " .. time;
+      end
+
       -- Update Frame
       GottaGoFastTimerFrame.font:SetText(GottaGoFast.ColorTimer(time));
       GottaGoFast.ResizeFrame();
@@ -161,6 +170,16 @@ end
 function GottaGoFast.UpdateCMObjectives()
   if (GottaGoFast.CurrentCM) then
     local objectiveString = "";
+    if (GottaGoFast.db.profile.LevelInObjectives and GottaGoFast.CurrentCM["Level"]) then
+      objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString("Level " .. GottaGoFast.CurrentCM["Level"] .. " - (+" .. GottaGoFast.CurrentCM["Bonus"] .. "%)\n");
+    end
+    if (GottaGoFast.db.profile.AffixesInObjectives and next(GottaGoFast.CurrentCM["Affixes"])) then
+      local affixString = "";
+      for k, v in pairs(GottaGoFast.CurrentCM["Affixes"]) do
+        affixString = affixString .. v .. " - ";
+      end
+      objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString(string.sub(affixString, 1, string.len(affixString) - 3) .. "\n");
+    end
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
       if (i == GottaGoFast.CurrentCM["Steps"]) then
         -- Last Step Should Be Enemies

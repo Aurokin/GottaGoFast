@@ -163,6 +163,31 @@ function GottaGoFast.SetObjectiveCompleteColor(info, r, g, b, a)
   GottaGoFast.UpdateCMObjectives();
 end
 
+function GottaGoFast.GetLevelInTimer(info)
+  return GottaGoFast.db.profile.LevelInTimer;
+end
+
+function GottaGoFast.SetLevelInTimer(info, value)
+  GottaGoFast.db.profile.LevelInTimer = value;
+end
+
+function GottaGoFast.GetLevelInObjectives(info)
+  return GottaGoFast.db.profile.LevelInObjectives;
+end
+
+function GottaGoFast.SetLevelInObjectives(info, value)
+  GottaGoFast.db.profile.LevelInObjectives = value;
+end
+
+function GottaGoFast.GetAffixesInObjectives(info)
+  return GottaGoFast.db.profile.AffixesInObjectives;
+end
+
+function GottaGoFast.SetAffixesInObjectives(info, value)
+  GottaGoFast.db.profile.AffixesInObjectives = value;
+end
+
+
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFast.LSM:Register("font", "Myriad Condensed Web", "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf")
@@ -188,6 +213,9 @@ function GottaGoFast.InitOptions()
       ObjectiveCollapsed = true,
       ObjectiveColor = "ffffffff",
       ObjectiveCompleteColor = "ff0ff000",
+      LevelInTimer = false,
+      LevelInObjectives = false,
+      AffixesInObjectives = false,
     },
   }
   local options = {
@@ -215,6 +243,30 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetCMAutoStart,
             set = GottaGoFast.SetCMAutoStart,
           },
+          LevelInTimer = {
+            order = 5,
+            type = "toggle",
+            name = "CM Level Display (Timer)",
+            desc = "Show the current CM Level at the start of the timer",
+            get = GottaGoFast.GetLevelInTimer,
+            set = GottaGoFast.SetLevelInTimer,
+          },
+          LevelInObjectives = {
+            order = 3,
+            type = "toggle",
+            name = "CM Level Display (Objectives)",
+            desc = "Show the current CM Level in the objectives list",
+            get = GottaGoFast.GetLevelInObjectives,
+            set = GottaGoFast.SetLevelInObjectives,
+          },
+          AffixesInObjectives = {
+            order = 4,
+            type = "toggle",
+            name = "Affix Display (Objectives)",
+            desc = "Show the current Affixes in the objectives list",
+            get = GottaGoFast.GetAffixesInObjectives,
+            set = GottaGoFast.SetAffixesInObjectives,
+          }
         }
       },
       display = {
@@ -375,7 +427,7 @@ function GottaGoFast.InitOptions()
             desc = "Collapse Objective Tracker When Leaving CM / Timewalker",
             get = GottaGoFast.GetObjectiveCollapsed,
             set = GottaGoFast.SetObjectiveCollapsed,
-          }
+          },
         },
       },
     },
