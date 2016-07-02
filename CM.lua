@@ -19,6 +19,11 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
   GottaGoFast.CurrentCM["Bosses"] = {};
 
+  --@Auro: If you want to add an option for allowing the timer to pick up MS precision or not, change this line to pull from db.
+  --This only picks up MS precision if TrueTimer is already enabled, so if truetimer is disabled the resync code does literally nothing.
+  GottaGoFast.CurrentCM["ResyncAllowed"]=true;
+
+
   for i = 1, steps do
     local name, _, status, curValue, finalValue = C_Scenario.GetCriteriaInfo(i);
     GottaGoFast.CurrentCM["CurrentValues"][i] = curValue;
@@ -69,12 +74,14 @@ end
 function GottaGoFast.WipeCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM = table.wipe(GottaGoFast.CurrentCM);
+    GottaGoFast.CurrentCM["ResyncAllowed"]=false;
   end
 end
 
 function GottaGoFast.StartCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM["StartTime"] = GetTime();
+    GottaGoFast.CurrentCM["ResyncAllowed"]=false;
   end
 end
 
@@ -82,6 +89,7 @@ function GottaGoFast.CompleteCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM["Completed"] = true;
     GottaGoFast.CMFinalParse();
+    GottaGoFast.CurrentCM["ResyncAllowed"]=false;
   end
 end
 
@@ -90,6 +98,27 @@ function GottaGoFast.UpdateCMTimer()
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       local time = "";
       local startMin, startSec, goldMin, goldSec;
+
+      if (GottaGoFast.CurrentCM["StartTime"] == nil and GottaGoFast.db.profile.TrueTimer and GottaGoFast.CurrentCM and GottaGoFast.CurrentCM["ResyncAllowed"]) then
+        local _,worldTime,timerType = GetWorldElapsedTime(1);
+        
+        --There is a bug with how instance time gets reset, this check prevents the timer from incrementing inappropriately after the instance is reset.
+        if (worldTime > 0 and timerType == 2) then
+          print(GetWorldElapsedTime(1));
+          local localTime = GetTime();
+          --This is likely overkill for what will ever happen, but logically the else requires it all to be true so I'm just going to check for it, just in case.
+          if (GottaGoFast.CurrentCM["ResyncTimeDisplayed"] == nil or  GottaGoFast.CurrentCM["ResyncTimeLocal"] == nil or GottaGoFast.CurrentCM["ResyncTimeDisplayed"] == worldTime) then
+            GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = worldTime;
+            GottaGoFast.CurrentCM["ResyncTimeLocal"] = localTime;
+          else
+            local expectedTime = (localTime + GottaGoFast.CurrentCM["ResyncTimeLocal"])/2;
+            GottaGoFast.CurrentCM["StartTime"] = expectedTime - worldTime;
+            GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = nil;
+            GottaGoFast.CurrentCM["ResyncTimeLocal"] = nil;
+          end
+        end
+      end
+
       if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
         local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
