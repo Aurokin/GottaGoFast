@@ -15,11 +15,11 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["Completed"] = false;
   GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = nil;
   GottaGoFast.CurrentCM["ResyncTimeLocal"] = nil;
+  GottaGoFast.CurrentCM["ResyncAllowed"] = true;
   GottaGoFast.CurrentCM["CurrentValues"] = {};
   GottaGoFast.CurrentCM["FinalValues"] = {};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
   GottaGoFast.CurrentCM["Bosses"] = {};
-  GottaGoFast.CurrentCM["ResyncAllowed"] = true;
 
   for i = 1, steps do
     local name, _, status, curValue, finalValue = C_Scenario.GetCriteriaInfo(i);
