@@ -87,7 +87,13 @@ end
 
 function GottaGoFast:WORLD_STATE_TIMER_START()
   if (GottaGoFast.inCM == true and GottaGoFast.CurrentCM["Completed"] == false) then
-    GottaGoFast.StartCM(0);
+    local _, timeCM = GetWorldElapsedTime(1);
+    if (timeCM <= 2) then
+      GottaGoFast.StartCM(0);
+    elseif (GottaGoFast.CurrentCM["StartTime"]) then
+      GottaGoFast.CurrentCM["StartTime"] = GottaGoFast.CurrentCM["StartTime"] - 5;
+      -- Death Counter Here
+    end
   end
 end
 
