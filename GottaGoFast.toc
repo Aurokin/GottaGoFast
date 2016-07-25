@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Version: 2.0
 ## Title: GottaGoFast
 ## Notes: CM Style Timer For CMs / Timewalking, Ace3 Edition
