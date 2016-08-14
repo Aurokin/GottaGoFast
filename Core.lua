@@ -21,7 +21,6 @@ function GottaGoFast:OnEnable()
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("SCENARIO_POI_UPDATE");
     self:RegisterEvent("WORLD_STATE_TIMER_START");
-    self:RegisterEvent("GOSSIP_SHOW");
     self:RegisterChatCommand("ggf", "ChatCommand");
     self:RegisterChatCommand("GottaGoFast", "ChatCommand");
     self:RegisterComm("GottaGoFast", "ChatComm");
@@ -94,12 +93,6 @@ function GottaGoFast:WORLD_STATE_TIMER_START()
       GottaGoFast.CurrentCM["StartTime"] = GottaGoFast.CurrentCM["StartTime"] - 5;
       -- Death Counter Here
     end
-  end
-end
-
-function GottaGoFast:GOSSIP_SHOW()
-  if (GottaGoFast.inCM and GottaGoFast.db.profile.CMAutoStart) then
-    SelectGossipOption(1);
   end
 end
 

@@ -197,6 +197,10 @@ function GottaGoFast.ColorTimer(time)
   return string.format("|c%s%s|r", GottaGoFast.db.profile.TimerColor, time);
 end
 
+function GottaGoFast.IncreaseColorString(value)
+  return string.format("|c%s%s|r", GottaGoFast.db.profile.IncreaseColor, value);
+end
+
 function GottaGoFast.HideObjectiveTracker()
   ObjectiveTrackerFrame:SetParent(GottaGoFastHideFrame);
 end

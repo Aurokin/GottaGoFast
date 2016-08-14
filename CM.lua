@@ -6,22 +6,25 @@ function GottaGoFast.UpdateCM()
 end
 
 function GottaGoFast.BuildCMTooltip()
-  local newTooltip;
-  local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();
-  if (cmLevel) then
-    newTooltip = "Level " .. cmLevel .. "\n\n";
-    for i, affixID in ipairs(affixes) do
-      local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
-      newTooltip = newTooltip .. affixName .. "\n";
-    end
-    if (empowered) then
-      newTooltip = newTooltip .. "\nEmpowered!";
+  if (GottaGoFast.CurrentCM) then
+    local newTooltip;
+    local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();
+    local bonus = GottaGoFast.CurrentCM["Bonus"];
+    if (cmLevel) then
+      newTooltip = "Level " .. cmLevel .. " - " .. tostring(bonus) .. "%\n\n";
+      for i, affixID in ipairs(affixes) do
+        local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
+        newTooltip = newTooltip .. affixName .. "\n";
+      end
+      if (empowered) then
+        newTooltip = newTooltip .. "\nEmpowered!";
+      else
+        newTooltip = newTooltip .. "\nDepleated";
+      end
+      GottaGoFast.tooltip = newTooltip;
     else
-      newTooltip = newTooltip .. "\nDepleated";
+      GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
     end
-    GottaGoFast.tooltip = newTooltip;
-  else
-    GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
   end
 end
 
@@ -42,6 +45,7 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["FinalValues"] = {};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
   GottaGoFast.CurrentCM["Bosses"] = {};
+  GottaGoFast.CurrentCM["IncreaseTimers"] = {};
 
   if (cmLevel) then
     GottaGoFast.CurrentCM["Bonus"] = C_ChallengeMode.GetPowerLevelDamageHealthMod(cmLevel);
@@ -60,6 +64,12 @@ function GottaGoFast.SetupCM(currentZoneID)
     if (i == steps) then
       GottaGoFast.CurrentCM["FinalValues"][i] = 100;
     end
+  end
+
+  if (GottaGoFast.CurrentCM["GoldTimer"]) then
+    GottaGoFast.CurrentCM["IncreaseTimers"][1] = GottaGoFast.CurrentCM["GoldTimer"];
+    GottaGoFast.CurrentCM["IncreaseTimers"][2] = GottaGoFast.CurrentCM["GoldTimer"] * 0.8;
+    GottaGoFast.CurrentCM["IncreaseTimers"][3] = GottaGoFast.CurrentCM["GoldTimer"] * 0.6;
   end
 
   GottaGoFast.BuildCMTooltip();
@@ -170,11 +180,24 @@ end
 function GottaGoFast.UpdateCMObjectives()
   if (GottaGoFast.CurrentCM) then
     local objectiveString = "";
+    local affixString = "";
+    local increaseString = "";
+    local goldMin, goldSec;
+    if (GottaGoFast.db.profile.IncreaseInObjectives and next(GottaGoFast.CurrentCM["IncreaseTimers"])) then
+      for k, v in pairs(GottaGoFast.CurrentCM["IncreaseTimers"]) do
+        if (k ~= 1 or GottaGoFast.db.profile.GoldTimer == false) then
+          goldMin, goldSec = GottaGoFast.SecondsToTime(v);
+          goldMin = GottaGoFast.FormatTimeNoMS(goldMin);
+          goldSec = GottaGoFast.FormatTimeNoMS(goldSec);
+          increaseString = increaseString .. "+" .. k .. " = " .. goldMin .. ":" .. goldSec .. " / ";
+        end
+      end
+      objectiveString = objectiveString .. GottaGoFast.IncreaseColorString(string.sub(increaseString, 1, string.len(increaseString) - 3) .. "\n");
+    end
     if (GottaGoFast.db.profile.LevelInObjectives and GottaGoFast.CurrentCM["Level"]) then
       objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString("Level " .. GottaGoFast.CurrentCM["Level"] .. " - (+" .. GottaGoFast.CurrentCM["Bonus"] .. "%)\n");
     end
     if (GottaGoFast.db.profile.AffixesInObjectives and next(GottaGoFast.CurrentCM["Affixes"])) then
-      local affixString = "";
       for k, v in pairs(GottaGoFast.CurrentCM["Affixes"]) do
         affixString = affixString .. v .. " - ";
       end

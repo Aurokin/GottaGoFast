@@ -118,14 +118,6 @@ function GottaGoFast.SetObjectiveAlign(info, value)
   GottaGoFastObjectiveFrame.font:SetJustifyH(GottaGoFast.db.profile.ObjectiveAlign);
 end
 
-function GottaGoFast.GetCMAutoStart(info)
-  return GottaGoFast.db.profile.CMAutoStart;
-end
-
-function GottaGoFast.SetCMAutoStart(info, value)
-  GottaGoFast.db.profile.CMAutoStart = value;
-end
-
 function GottaGoFast.GetObjectiveCollapsed(info)
   return GottaGoFast.db.profile.ObjectiveCollapsed;
 end
@@ -163,6 +155,15 @@ function GottaGoFast.SetObjectiveCompleteColor(info, r, g, b, a)
   GottaGoFast.UpdateCMObjectives();
 end
 
+function GottaGoFast.GetIncreaseColor(info)
+  local a, r, g, b = GottaGoFast.HexToRGB(GottaGoFast.db.profile.IncreaseColor);
+  return r, g, b, a;
+end
+
+function GottaGoFast.SetIncreaseColor(info, r, g, b, a)
+  GottaGoFast.db.profile.IncreaseColor = GottaGoFast.RGBToHex(r, g, b, a);
+end
+
 function GottaGoFast.GetLevelInTimer(info)
   return GottaGoFast.db.profile.LevelInTimer;
 end
@@ -187,6 +188,13 @@ function GottaGoFast.SetAffixesInObjectives(info, value)
   GottaGoFast.db.profile.AffixesInObjectives = value;
 end
 
+function GottaGoFast.GetIncreaseInObjectives(info)
+  return GottaGoFast.db.profile.IncreaseInObjectives;
+end
+
+function GottaGoFast.SetIncreaseInObjectives(info, value)
+  GottaGoFast.db.profile.IncreaseInObjectives = value;
+end
 
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
@@ -195,7 +203,6 @@ function GottaGoFast.InitOptions()
     profile = {
       GoldTimer = true,
       TrueTimer = true,
-      CMAutoStart = false,
       FrameAnchor = "RIGHT",
       FrameX = 0,
       FrameY = 0,
@@ -213,9 +220,11 @@ function GottaGoFast.InitOptions()
       ObjectiveCollapsed = true,
       ObjectiveColor = "ffffffff",
       ObjectiveCompleteColor = "ff0ff000",
-      LevelInTimer = false,
+      IncreaseColor = "ffffffff",
+      LevelInTimer = true,
       LevelInObjectives = false,
-      AffixesInObjectives = false,
+      AffixesInObjectives = true,
+      IncreaseInObjectives = true,
     },
   }
   local options = {
@@ -228,28 +237,20 @@ function GottaGoFast.InitOptions()
         type = "group",
         args = {
           TrueTimer = {
-            order = 2,
+            order = 1,
             type = "toggle",
             name = "True Timer",
-            desc = "Toggles True Timer",
+            desc = "Toggles MS Precision",
             get = GottaGoFast.GetTrueTimer,
             set = GottaGoFast.SetTrueTimer,
           },
-          CMAutoStart = {
-            order = 1,
+          GoldTimer = {
+            order = 2,
             type = "toggle",
-            name = "CM Auto Start",
-            desc = "Auto Starts CM When Orb Is Clicked",
-            get = GottaGoFast.GetCMAutoStart,
-            set = GottaGoFast.SetCMAutoStart,
-          },
-          LevelInTimer = {
-            order = 5,
-            type = "toggle",
-            name = "CM Level Display (Timer)",
-            desc = "Show the current CM Level at the start of the timer",
-            get = GottaGoFast.GetLevelInTimer,
-            set = GottaGoFast.SetLevelInTimer,
+            name = "Gold Timer",
+            desc = "Toggles Gold Timer",
+            get = GottaGoFast.GetGoldTimer,
+            set = GottaGoFast.SetGoldTimer,
           },
           LevelInObjectives = {
             order = 3,
@@ -266,6 +267,22 @@ function GottaGoFast.InitOptions()
             desc = "Show the current Affixes in the objectives list",
             get = GottaGoFast.GetAffixesInObjectives,
             set = GottaGoFast.SetAffixesInObjectives,
+          },
+          LevelInTimer = {
+            order = 5,
+            type = "toggle",
+            name = "CM Level Display (Timer)",
+            desc = "Show the current CM Level at the start of the timer",
+            get = GottaGoFast.GetLevelInTimer,
+            set = GottaGoFast.SetLevelInTimer,
+          },
+          IncreaseInObjectives = {
+            order = 6,
+            type = "toggle",
+            name = "Keystone Increase Display (Objectives)",
+            desc = "Bonus Keystone Time Splits",
+            get = GottaGoFast.GetIncreaseInObjectives,
+            set = GottaGoFast.SetIncreaseInObjectives,
           }
         }
       },
@@ -281,13 +298,13 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetUnlocked,
             set = GottaGoFast.SetUnlocked,
           },
-          GoldTimer = {
+          ObjectiveCollapsed = {
             order = 2,
             type = "toggle",
-            name = "Gold Timer",
-            desc = "Toggles Gold Timer",
-            get = GottaGoFast.GetGoldTimer,
-            set = GottaGoFast.SetGoldTimer,
+            name = "Objective Tracker Collapse",
+            desc = "Collapse Objective Tracker When Leaving CM / Timewalker",
+            get = GottaGoFast.GetObjectiveCollapsed,
+            set = GottaGoFast.SetObjectiveCollapsed,
           },
           TimerX = {
             order = 3,
@@ -420,13 +437,14 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetTimerColor,
             hasAlpha = false,
           },
-          ObjectiveCollapsed = {
+          IncreaseColor = {
             order = 16,
-            type = "toggle",
-            name = "Objective Tracker Collapse",
-            desc = "Collapse Objective Tracker When Leaving CM / Timewalker",
-            get = GottaGoFast.GetObjectiveCollapsed,
-            set = GottaGoFast.SetObjectiveCollapsed,
+            type = "color",
+            name = "Keystone Increase Color",
+            desc = "Default: White",
+            get = GottaGoFast.GetIncreaseColor,
+            set = GottaGoFast.SetIncreaseColor,
+            hasAlpha = false,
           },
         },
       },
