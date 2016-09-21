@@ -217,7 +217,7 @@ function GottaGoFast.InitOptions()
       ObjectiveY = -40,
       ObjectiveFont = "Myriad Condensed Web",
       ObjectiveFontSize = 21,
-      ObjectiveCollapsed = true,
+      ObjectiveCollapsed = false,
       ObjectiveColor = "ffffffff",
       ObjectiveCompleteColor = "ff0ff000",
       IncreaseColor = "ffffffff",
