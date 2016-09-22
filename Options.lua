@@ -446,6 +446,13 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetIncreaseColor,
             hasAlpha = false,
           },
+          DemoMode = {
+            order = 17,
+            type = "execute",
+            name = "Demo Mode",
+            desc = "Shows GottaGoFast Outside CM For Demo / Setup Purposes",
+            func = GottaGoFast.ToggleDemoMode,
+          },
         },
       },
     },

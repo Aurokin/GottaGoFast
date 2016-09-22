@@ -213,7 +213,7 @@ function GottaGoFast.ShowObjectiveTracker()
   end
 end
 
-function GottaGoFast.toggleDemoMode()
+function GottaGoFast.ToggleDemoMode()
   if (GottaGoFast.inCM == false and GottaGoFast.inTW == false) then
     -- Demo Mode Goes Here
     if (GottaGoFast.demoMode == false) then
