@@ -84,6 +84,7 @@ function GottaGoFast.SetupCM(currentZoneID)
 end
 
 function GottaGoFast.SetupFakeCM()
+  local affixes = {2, 7, 10};
   GottaGoFast.CurrentCM = {};
   GottaGoFast.CurrentCM["StartTime"] = GetTime() - (60*5);
   GottaGoFast.CurrentCM["Time"] = nil;
@@ -95,18 +96,18 @@ function GottaGoFast.SetupFakeCM()
   GottaGoFast.CurrentCM["Bonus"] = 100;
   GottaGoFast.CurrentCM["Completed"] = false;
   -- File With Affix IDs Here
-  GottaGoFast.CurrentCM["Affixes"] = {2, 7, 10};
+  GottaGoFast.CurrentCM["Affixes"] = {};
   GottaGoFast.CurrentCM["CurrentValues"] = {1, 1, 0, 0, 40};
   GottaGoFast.CurrentCM["FinalValues"] = {1, 1, 1, 1, 100};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {"1:15.460", "3:45.012"};
   GottaGoFast.CurrentCM["Bosses"] = {"Rokmora", "Ularogg Cragshaper", "Naraxas", "Dargrul", "Enemy Forces"};
   GottaGoFast.CurrentCM["IncreaseTimers"] = {};
 
-  for i, affixID in ipairs(GottaGoFast.CurrentCM["Affixes"]) do
-    local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(i);
-    GottaGoFast.CurrentCM["Affixes"][i] = {};
-    GottaGoFast.CurrentCM["Affixes"][i]["name"] = affixName;
-    GottaGoFast.CurrentCM["Affixes"][i]["desc"] = affixDesc;
+  for i, affixID in ipairs(affixes) do
+    local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
+    GottaGoFast.CurrentCM["Affixes"][affixID] = {};
+    GottaGoFast.CurrentCM["Affixes"][affixID]["name"] = affixName;
+    GottaGoFast.CurrentCM["Affixes"][affixID]["desc"] = affixDesc;
   end
 
   if (GottaGoFast.CurrentCM["GoldTimer"]) then
