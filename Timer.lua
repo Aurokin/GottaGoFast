@@ -216,5 +216,15 @@ end
 function GottaGoFast.toggleDemoMode()
   if (GottaGoFast.inCM == false and GottaGoFast.inTW == false) then
     -- Demo Mode Goes Here
+    if (GottaGoFast.demoMode == false) then
+      GottaGoFast.SetupFakeCM();
+      GottaGoFast.UpdateCMTimer();
+      GottaGoFast.UpdateCMObjectives();
+      GottaGoFast.ShowFrames();
+      GottaGoFast.demoMode = true;
+    else
+      GottaGoFast.ResetState();
+      GottaGoFast.demoMode = false;
+    end
   end
 end

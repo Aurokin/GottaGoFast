@@ -58,6 +58,7 @@ function GottaGoFast:PLAYER_ENTERING_WORLD()
   --self:Print("Player Entered World");
   GottaGoFast.CheckCount = 0;
   GottaGoFast.FirstCheck = false;
+  GottaGoFast.ResetState();
   GottaGoFast.WhereAmI();
 end
 
@@ -130,6 +131,18 @@ function GottaGoFast:ChatComm(prefix, input, distribution, sender)
   end
 end
 
+function GottaGoFast.ResetState()
+  GottaGoFast.WipeCM();
+  GottaGoFast.WipeTW();
+  GottaGoFast.inCM = false;
+  GottaGoFast.inTW = false;
+  GottaGoFast.demoMode = false;
+  GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
+  GottaGoFastFrame:SetScript("OnUpdate", nil);
+  GottaGoFast.HideFrames();
+  GottaGoFast.ShowObjectiveTracker();
+end
+
 function GottaGoFast.WhereAmI()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
   --GottaGoFast:Print("Difficulty: " .. difficulty);
@@ -171,13 +184,6 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.CheckCount = GottaGoFast.CheckCount + 1;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
   else
-    GottaGoFast.WipeCM();
-    GottaGoFast.WipeTW();
-    GottaGoFast.inCM = false;
-    GottaGoFast.inTW = false;
-    GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
-    GottaGoFastFrame:SetScript("OnUpdate", nil);
-    GottaGoFast.HideFrames();
-    GottaGoFast.ShowObjectiveTracker();
+    GottaGoFast.ResetState();
   end
 end
