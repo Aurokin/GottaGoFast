@@ -14,6 +14,8 @@ end
 
 function GottaGoFast.SetGoldTimer(info, value)
   GottaGoFast.db.profile.GoldTimer = value;
+  GottaGoFast.UpdateCMTimer();
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.GetTrueTimer(info)
@@ -22,6 +24,7 @@ end
 
 function GottaGoFast.SetTrueTimer(info, value)
   GottaGoFast.db.profile.TrueTimer = value;
+  GottaGoFast.UpdateCMTimer();
 end
 
 function GottaGoFast.GetTimerX(info)
@@ -133,6 +136,7 @@ end
 
 function GottaGoFast.SetTimerColor(info, r, g, b, a)
   GottaGoFast.db.profile.TimerColor = GottaGoFast.RGBToHex(r, g, b, a);
+  GottaGoFast.UpdateCMTimer();
 end
 
 function GottaGoFast.GetObjectiveColor(info)
@@ -162,6 +166,7 @@ end
 
 function GottaGoFast.SetIncreaseColor(info, r, g, b, a)
   GottaGoFast.db.profile.IncreaseColor = GottaGoFast.RGBToHex(r, g, b, a);
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.GetLevelInTimer(info)
@@ -170,6 +175,7 @@ end
 
 function GottaGoFast.SetLevelInTimer(info, value)
   GottaGoFast.db.profile.LevelInTimer = value;
+  GottaGoFast.UpdateCMTimer();
 end
 
 function GottaGoFast.GetLevelInObjectives(info)
@@ -178,6 +184,7 @@ end
 
 function GottaGoFast.SetLevelInObjectives(info, value)
   GottaGoFast.db.profile.LevelInObjectives = value;
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.GetAffixesInObjectives(info)
@@ -186,6 +193,7 @@ end
 
 function GottaGoFast.SetAffixesInObjectives(info, value)
   GottaGoFast.db.profile.AffixesInObjectives = value;
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.GetIncreaseInObjectives(info)
@@ -194,6 +202,7 @@ end
 
 function GottaGoFast.SetIncreaseInObjectives(info, value)
   GottaGoFast.db.profile.IncreaseInObjectives = value;
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast.InitOptions()

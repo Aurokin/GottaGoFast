@@ -220,6 +220,7 @@ function GottaGoFast.ToggleDemoMode()
       GottaGoFast.SetupFakeCM();
       GottaGoFast.UpdateCMTimer();
       GottaGoFast.UpdateCMObjectives();
+      GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
       GottaGoFast.ShowFrames();
       GottaGoFast.demoMode = true;
     else

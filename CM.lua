@@ -1,11 +1,11 @@
 function GottaGoFast.UpdateCM()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     GottaGoFast.UpdateCMTimer();
   end
 end
 
 function GottaGoFast.BuildCMTooltip()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     local newTooltip;
     local cmLevel = GottaGoFast.CurrentCM["Level"];
     local empowered = GottaGoFast.CurrentCM["Empowered"];
@@ -98,7 +98,7 @@ function GottaGoFast.SetupFakeCM()
   GottaGoFast.CurrentCM["Affixes"] = {2, 7, 10};
   GottaGoFast.CurrentCM["CurrentValues"] = {1, 1, 0, 0, 40};
   GottaGoFast.CurrentCM["FinalValues"] = {1, 1, 1, 1, 100};
-  GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
+  GottaGoFast.CurrentCM["ObjectiveTimes"] = {"1:15.460", "3:45.012"};
   GottaGoFast.CurrentCM["Bosses"] = {"Rokmora", "Ularogg Cragshaper", "Naraxas", "Dargrul", "Enemy Forces"};
   GottaGoFast.CurrentCM["IncreaseTimers"] = {};
 
@@ -120,7 +120,7 @@ function GottaGoFast.SetupFakeCM()
 end
 
 function GottaGoFast.UpdateCMInformation()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       for i = 1, GottaGoFast.CurrentCM["Steps"] do
         local name, _, status, curValue, finalValue = C_Scenario.GetCriteriaInfo(i);
@@ -146,7 +146,7 @@ function GottaGoFast.UpdateCMInformation()
 end
 
 function GottaGoFast.CMFinalParse()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     for i = 1, GottaGoFast.CurrentCM["Steps"] do
       GottaGoFast.CurrentCM["CurrentValues"][i] = GottaGoFast.CurrentCM["FinalValues"][i];
       if (not GottaGoFast.CurrentCM["ObjectiveTimes"][i]) then
@@ -157,27 +157,27 @@ function GottaGoFast.CMFinalParse()
 end
 
 function GottaGoFast.WipeCM()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     GottaGoFast.CurrentCM = table.wipe(GottaGoFast.CurrentCM);
   end
 end
 
 function GottaGoFast.StartCM(offset)
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     GottaGoFast.CurrentCM["StartTime"] = GetTime() + offset;
     GottaGoFast.BuildCMTooltip();
   end
 end
 
 function GottaGoFast.CompleteCM()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     GottaGoFast.CurrentCM["Completed"] = true;
     GottaGoFast.CMFinalParse();
   end
 end
 
 function GottaGoFast.UpdateCMTimer()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       local time = "";
       local startMin, startSec, goldMin, goldSec;
@@ -221,7 +221,7 @@ function GottaGoFast.UpdateCMTimer()
 end
 
 function GottaGoFast.UpdateCMObjectives()
-  if (GottaGoFast.CurrentCM) then
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     local objectiveString = "";
     local affixString = "";
     local increaseString = "";
