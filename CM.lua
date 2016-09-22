@@ -1,6 +1,7 @@
 function GottaGoFast.UpdateCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.UpdateCMTimer();
+    -- Hopefully use SCENARIO_POI_UPDATE to update objectives
   end
 end
 
@@ -13,9 +14,6 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["GoldTimer"] = GottaGoFastInstanceInfo[currentZoneID]["GoldTimer"];
   GottaGoFast.CurrentCM["Steps"] = steps;
   GottaGoFast.CurrentCM["Completed"] = false;
-  GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = nil;
-  GottaGoFast.CurrentCM["ResyncTimeLocal"] = nil;
-  GottaGoFast.CurrentCM["ResyncAllowed"] = true;
   GottaGoFast.CurrentCM["CurrentValues"] = {};
   GottaGoFast.CurrentCM["FinalValues"] = {};
   GottaGoFast.CurrentCM["ObjectiveTimes"] = {};
@@ -77,36 +75,13 @@ end
 function GottaGoFast.StartCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM["StartTime"] = GetTime();
-    GottaGoFast.CurrentCM["ResyncAllowed"] = false;
   end
 end
 
 function GottaGoFast.CompleteCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.CurrentCM["Completed"] = true;
-    GottaGoFast.CurrentCM["ResyncAllowed"] = false;
     GottaGoFast.CMFinalParse();
-
-  end
-end
-
-function GottaGoFast.ResyncTimer()
-  if (GottaGoFast.CurrentCM["StartTime"] == nil and GottaGoFast.db.profile.TrueTimer and GottaGoFast.CurrentCM["ResyncAllowed"]) then
-    local _, worldTime, timerType = GetWorldElapsedTime(1);
-    --There is a bug with how instance time gets reset, this check prevents the timer from incrementing inappropriately after the instance is reset.
-    if (worldTime > 0 and timerType == 2) then
-      local localTime = GetTime();
-      --This is likely overkill for what will ever happen, but logically the else requires it all to be true so I'm just going to check for it, just in case.
-      if (GottaGoFast.CurrentCM["ResyncTimeDisplayed"] == nil or  GottaGoFast.CurrentCM["ResyncTimeLocal"] == nil or GottaGoFast.CurrentCM["ResyncTimeDisplayed"] == worldTime) then
-        GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = worldTime;
-        GottaGoFast.CurrentCM["ResyncTimeLocal"] = localTime;
-      else
-        local expectedTime = (localTime + GottaGoFast.CurrentCM["ResyncTimeLocal"]) / 2;
-        GottaGoFast.CurrentCM["StartTime"] = expectedTime - worldTime;
-        GottaGoFast.CurrentCM["ResyncTimeDisplayed"] = nil;
-        GottaGoFast.CurrentCM["ResyncTimeLocal"] = nil;
-      end
-    end
   end
 end
 
@@ -115,9 +90,6 @@ function GottaGoFast.UpdateCMTimer()
     if (GottaGoFast.CurrentCM["Completed"] == false) then
       local time = "";
       local startMin, startSec, goldMin, goldSec;
-
-      GottaGoFast.ResyncTimer();
-
       if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
         local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
