@@ -6,6 +6,7 @@ function GottaGoFast.InitState()
   GottaGoFast.unlocked = false;
   GottaGoFast.defaultTooltip = "Not In A CM";
   GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
+  GottaGoFast.demoMode = false;
 end
 
 function GottaGoFast.TooltipOnEnter(self)
@@ -209,5 +210,11 @@ function GottaGoFast.ShowObjectiveTracker()
   ObjectiveTrackerFrame:SetParent(UIParent);
   if (GottaGoFast.db.profile.ObjectiveCollapsed == true) then
     ObjectiveTracker_Collapse();
+  end
+end
+
+function GottaGoFast.toggleDemoMode()
+  if (GottaGoFast.inCM == false and GottaGoFast.inTW == false) then
+    -- Demo Mode Goes Here
   end
 end
