@@ -38,9 +38,7 @@ end
 
 function GottaGoFast:CHALLENGE_MODE_START()
   --self:Print("CM Start");
-  if (GottaGoFast.inCM == false) then
-    GottaGoFast.WhereAmI();
-  end
+  GottaGoFast.WhereAmI();
   GottaGoFast.StartCM(10);
 end
 
