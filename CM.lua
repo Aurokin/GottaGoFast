@@ -1,25 +1,27 @@
 function GottaGoFast.UpdateCM()
   if (GottaGoFast.CurrentCM) then
     GottaGoFast.UpdateCMTimer();
-    -- Hopefully use SCENARIO_POI_UPDATE to update objectives
   end
 end
 
 function GottaGoFast.BuildCMTooltip()
   if (GottaGoFast.CurrentCM) then
     local newTooltip;
-    local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();
+    local cmLevel = GottaGoFast.CurrentCM["Level"];
+    local affixes = GottaGoFast.CurrentCM["Affixes"];
+    local empowered = GottaGoFast.CurrentCM["Empowered"];
     local bonus = GottaGoFast.CurrentCM["Bonus"];
     if (cmLevel) then
-      newTooltip = "Level " .. cmLevel .. " - " .. tostring(bonus) .. "%\n\n";
-      for i, affixID in ipairs(affixes) do
-        local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
-        newTooltip = newTooltip .. affixName .. "\n";
-      end
       if (empowered) then
-        newTooltip = newTooltip .. "\nEmpowered!";
+        empowered = "Empowered";
       else
-        newTooltip = newTooltip .. "\nDepleated";
+        empowered = "Depleated";
+      end
+      newTooltip = empowered .. ": Level " .. cmLevel .. " - " .. tostring(bonus) .. "%\n\n";
+      for i, affixID in ipairs(affixes) do
+        local affixName = affixID["name"];
+        local affixDesc = affixID["desc"];
+        newTooltip = newTooltip .. affixName .. "\n" .. affixDesc .. "\n\n";
       end
       GottaGoFast.tooltip = newTooltip;
     else
@@ -54,8 +56,9 @@ function GottaGoFast.SetupCM(currentZoneID)
 
   for i, affixID in ipairs(affixes) do
     local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
-    GottaGoFast.CurrentCM["Affixes"][affixID] = affixName;
-    GottaGoFast.CurrentCM["Affixes"][affixDesc] = affixDesc;
+    GottaGoFast.CurrentCM["Affixes"][affixID] = {};
+    GottaGoFast.CurrentCM["Affixes"][affixID]["name"] = affixName;
+    GottaGoFast.CurrentCM["Affixes"][affixID]["desc"] = affixDesc;
   end
 
   for i = 1, steps do
@@ -89,7 +92,7 @@ function GottaGoFast.SetupFakeCM()
   GottaGoFast.CurrentCM["Steps"] = 5;
   GottaGoFast.CurrentCM["Level"] = 10;
   GottaGoFast.CurrentCM["Empowered"] = true;
-  GottaGoFast.CurrentCM["Bonus"] = "100";
+  GottaGoFast.CurrentCM["Bonus"] = 100;
   GottaGoFast.CurrentCM["Completed"] = false;
   -- File With Affix IDs Here
   GottaGoFast.CurrentCM["Affixes"] = {};
@@ -101,8 +104,9 @@ function GottaGoFast.SetupFakeCM()
 
   for i, affixID in ipairs(affixes) do
     local affixName, affixDesc, affixNum = C_ChallengeMode.GetAffixInfo(affixID);
-    GottaGoFast.CurrentCM["Affixes"][affixID] = affixName;
-    GottaGoFast.CurrentCM["Affixes"][affixDesc] = affixDesc;
+    GottaGoFast.CurrentCM["Affixes"][affixID] = {};
+    GottaGoFast.CurrentCM["Affixes"][affixID]["name"] = affixName;
+    GottaGoFast.CurrentCM["Affixes"][affixID]["desc"] = affixDesc;
   end
 
   if (GottaGoFast.CurrentCM["GoldTimer"]) then
@@ -238,7 +242,7 @@ function GottaGoFast.UpdateCMObjectives()
     end
     if (GottaGoFast.db.profile.AffixesInObjectives and next(GottaGoFast.CurrentCM["Affixes"])) then
       for k, v in pairs(GottaGoFast.CurrentCM["Affixes"]) do
-        affixString = affixString .. v .. " - ";
+        affixString = affixString .. v["name"] .. " - ";
       end
       objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString(string.sub(affixString, 1, string.len(affixString) - 3) .. "\n");
     end
