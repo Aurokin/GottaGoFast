@@ -234,6 +234,7 @@ function GottaGoFast.InitOptions()
       LevelInObjectives = false,
       AffixesInObjectives = true,
       IncreaseInObjectives = true,
+      History = {},
     },
   }
   local options = {

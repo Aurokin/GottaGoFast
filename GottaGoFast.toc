@@ -1,7 +1,7 @@
 ## Interface: 70000
-## Version: 2.0
+## Version: 2.2.1
 ## Title: GottaGoFast
-## Notes: CM Style Timer For CMs / Timewalking, Ace3 Edition
+## Notes: Mythic+ (CMs) Timer & Objective Tracker W/ Timewalking Capabilities, Ace3 Edition
 ## SavedVariables: GottaGoFastDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
@@ -14,3 +14,7 @@ CM.lua
 TW.lua
 InstanceInfo.lua
 Options.lua
+Models/Player.lua
+Models/Dungeon.lua
+Models/Run.lua
+History.lua
