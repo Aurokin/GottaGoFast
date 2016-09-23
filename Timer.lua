@@ -118,15 +118,27 @@ function GottaGoFast.ResizeFrame()
 end
 
 function GottaGoFast.ShowFrames()
-  GottaGoFastFrame:Show();
-  GottaGoFastTimerFrame:Show();
-  GottaGoFastObjectiveFrame:Show();
+  if (GottaGoFastFrame:IsShown() == false) then
+    GottaGoFastFrame:Show();
+  end
+  if (GottaGoFastTimerFrame:IsShown() == false) then
+    GottaGoFastTimerFrame:Show();
+  end
+  if (GottaGoFastObjectiveFrame:IsShown() == false) then
+    GottaGoFastObjectiveFrame:Show();
+  end
 end
 
 function GottaGoFast.HideFrames()
-  GottaGoFastFrame:Hide();
-  GottaGoFastTimerFrame:Hide();
-  GottaGoFastObjectiveFrame:Hide();
+  if (GottaGoFastFrame:IsShown()) then
+    GottaGoFastFrame:Hide();
+  end
+  if (GottaGoFastTimerFrame:IsShown()) then
+    GottaGoFastTimerFrame:Hide();
+  end
+  if (GottaGoFastObjectiveFrame:IsShown()) then
+    GottaGoFastObjectiveFrame:Hide();
+  end
 end
 
 function GottaGoFast.SecondsToTime(seconds)
