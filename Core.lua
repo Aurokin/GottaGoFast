@@ -29,6 +29,7 @@ function GottaGoFast:OnEnable()
     GottaGoFast.InitState();
     GottaGoFast.InitOptions();
     GottaGoFast.InitFrame();
+    GottaGoFast.InitModels();
 
 end
 
@@ -86,10 +87,10 @@ end
 function GottaGoFast:WORLD_STATE_TIMER_START()
   if (GottaGoFast.inCM == true and GottaGoFast.CurrentCM["Completed"] == false) then
     local _, timeCM = GetWorldElapsedTime(1);
-    if (timeCM <= 2) then
+    if (timeCM == nil or timeCM <= 4) then
       GottaGoFast.StartCM(0);
-    elseif (GottaGoFast.CurrentCM["StartTime"]) then
-      GottaGoFast.CurrentCM["StartTime"] = GottaGoFast.CurrentCM["StartTime"] - 5;
+    elseif (GottaGoFast.CurrentCM["Deaths"]) then
+      GottaGoFast.CurrentCM["Deaths"] = GottaGoFast.CurrentCM["Deaths"] + 1;
       -- Death Counter Here
     end
   end

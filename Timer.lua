@@ -7,6 +7,7 @@ function GottaGoFast.InitState()
   GottaGoFast.defaultTooltip = "Not In A CM";
   GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
   GottaGoFast.demoMode = false;
+  GottaGoFast.Models = {};
 end
 
 function GottaGoFast.TooltipOnEnter(self)

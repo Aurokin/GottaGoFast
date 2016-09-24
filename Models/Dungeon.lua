@@ -50,4 +50,6 @@ function Dungeon:SetRuns(runs)
   self.runs = runs
 end
 
-GottaGoFast.Models.Dungeon = Dungeon;
+function GottaGoFast.InitModelDungeon()
+  GottaGoFast.Models.Dungeon = Dungeon;
+end

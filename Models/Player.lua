@@ -68,4 +68,6 @@ function Player:SetRole(role)
   self.role = role
 end
 
-GottaGoFast.Models.Player = Player;
+function GottaGoFast.InitModelPlayer()
+  GottaGoFast.Models.Player = Player;
+end

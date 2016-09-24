@@ -40,6 +40,7 @@ function GottaGoFast.SetupCM(currentZoneID)
   GottaGoFast.CurrentCM["Time"] = nil;
   GottaGoFast.CurrentCM["String"] = nil;
   GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["GoldTimer"] = C_ChallengeMode.GetMapInfo(currentZoneID);
+  GottaGoFast.CurrentCM["Deaths"] = 0;
   GottaGoFast.CurrentCM["Steps"] = steps;
   GottaGoFast.CurrentCM["Level"] = cmLevel;
   GottaGoFast.CurrentCM["Empowered"] = empowered;
@@ -90,6 +91,7 @@ function GottaGoFast.SetupFakeCM()
   GottaGoFast.CurrentCM["Time"] = nil;
   GottaGoFast.CurrentCM["String"] = nil;
   GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["GoldTimer"] = C_ChallengeMode.GetMapInfo(1458);
+  GottaGoFast.CurrentCM["Deaths"] = 0;
   GottaGoFast.CurrentCM["Steps"] = 5;
   GottaGoFast.CurrentCM["Level"] = 10;
   GottaGoFast.CurrentCM["Empowered"] = true;
@@ -184,7 +186,7 @@ function GottaGoFast.UpdateCMTimer()
       local startMin, startSec, goldMin, goldSec;
       if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
-        local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
+        local secs = currentTime - GottaGoFast.CurrentCM["StartTime"] - (GottaGoFast.CurrentCM["Deaths"] * 5);
         if (secs < 0) then
           startMin = "-00";
           startSec = GottaGoFast.FormatTimeMS(math.abs(secs));

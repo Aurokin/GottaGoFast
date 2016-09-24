@@ -9,12 +9,13 @@ setmetatable(Run, {
   end,
 })
 
-function Run.New(startTime, endTime, totalTime, level, objectiveTimes, affixes, players)
+function Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, affixes, players)
   local self = setmetatable({}, Run)
   self.active = true;
   self.startTime = startTime;
   self.endTime = endTime;
   self.totalTime = totalTime;
+  self.deaths = deaths;
   self.level = level;
   self.objectiveTimes = objectiveTimes;
   self.affixes = affixes;
@@ -54,6 +55,14 @@ function Run:SetTotalTime(totalTime)
   self.totalTime = totalTime
 end
 
+function Run:GetDeaths()
+  return self.deaths
+end
+
+function Run:SetDeaths(deaths)
+  self.deaths = deaths
+end
+
 function Run:GetLevel()
   return self.level
 end
@@ -86,6 +95,6 @@ function Run:SetPlayers(players)
   self.players = players
 end
 
-
-
-GottaGoFast.Models.Run = Run;
+function GottaGoFast.InitModelRun()
+  GottaGoFast.Models.Run = Run;
+end
