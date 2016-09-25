@@ -87,7 +87,7 @@ end
 function GottaGoFast:WORLD_STATE_TIMER_START()
   if (GottaGoFast.inCM == true and GottaGoFast.CurrentCM["Completed"] == false) then
     local _, timeCM = GetWorldElapsedTime(1);
-    if (timeCM == nil or timeCM <= 4) then
+    if (timeCM == nil or timeCM <= 3) then
       GottaGoFast.StartCM(0);
     elseif (GottaGoFast.CurrentCM["Deaths"]) then
       GottaGoFast.CurrentCM["Deaths"] = GottaGoFast.CurrentCM["Deaths"] + 1;
