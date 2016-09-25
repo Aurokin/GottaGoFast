@@ -23,8 +23,8 @@ function GottaGoFast.BuildCMTooltip()
           local affixDesc = affixID["desc"];
           newTooltip = newTooltip .. affixName .. "\n" .. affixDesc .. "\n\n";
         end
-        newTooltip = string.sub(newTooltip, 1, string.len(newTooltip) - 4);
       end
+      newTooltip = string.sub(newTooltip, 1, string.len(newTooltip) - 4);
       GottaGoFast.tooltip = newTooltip;
     else
       GottaGoFast.tooltip = GottaGoFast.defaultTooltip;
