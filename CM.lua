@@ -186,7 +186,9 @@ function GottaGoFast.UpdateCMTimer()
       local startMin, startSec, goldMin, goldSec;
       if (GottaGoFast.CurrentCM["StartTime"] and GottaGoFast.db.profile.TrueTimer) then
         local currentTime = GetTime();
-        local secs = currentTime - GottaGoFast.CurrentCM["StartTime"] - (GottaGoFast.CurrentCM["Deaths"] * 5);
+        local deaths = GottaGoFast.CurrentCM["Deaths"] * 5;
+        local secs = currentTime - GottaGoFast.CurrentCM["StartTime"];
+        secs = secs + deaths;
         if (secs < 0) then
           startMin = "-00";
           startSec = GottaGoFast.FormatTimeMS(math.abs(secs));
