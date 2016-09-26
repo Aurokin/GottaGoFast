@@ -53,7 +53,7 @@ end
 
 function GottaGoFast.SetTimerFont(info, value)
   GottaGoFast.db.profile.TimerFont = value;
-  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, GottaGoFast.db.profile.TimerFontFlag);
 end
 
 function GottaGoFast.GetObjectiveFont(info)
@@ -62,7 +62,7 @@ end
 
 function GottaGoFast.SetObjectiveFont(info, value)
   GottaGoFast.db.profile.ObjectiveFont = value;
-  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, GottaGoFast.db.profile.ObjectiveFontFlag);
 end
 
 function GottaGoFast.GetTimerFontSize(info)
@@ -71,7 +71,7 @@ end
 
 function GottaGoFast.SetTimerFontSize(info, value)
   GottaGoFast.db.profile.TimerFontSize = value;
-  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, "OUTLINE");
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, GottaGoFast.db.profile.TimerFontFlag);
 end
 
 function GottaGoFast.GetTimerAlign(info)
@@ -109,7 +109,7 @@ end
 
 function GottaGoFast.SetObjectiveFontSize(info, value)
   GottaGoFast.db.profile.ObjectiveFontSize = value;
-  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, "OUTLINE");
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, GottaGoFast.db.profile.ObjectiveFontFlag);
 end
 
 function GottaGoFast.GetObjectiveAlign(info)
@@ -214,6 +214,24 @@ function GottaGoFast.SetObjectiveCompleteInObjectives(info, value)
   GottaGoFast.UpdateCMObjectives();
 end
 
+function GottaGoFast.GetTimerFontFlag(info)
+  return GottaGoFast.db.profile.TimerFontFlag;
+end
+
+function GottaGoFast.SetTimerFontFlag(info, value)
+  GottaGoFast.db.profile.TimerFontFlag = value;
+  GottaGoFastTimerFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.TimerFont), GottaGoFast.db.profile.TimerFontSize, GottaGoFast.db.profile.TimerFontFlag);
+end
+
+function GottaGoFast.GetObjectiveFontFlag(info)
+  return GottaGoFast.db.profile.ObjectiveFontFlag;
+end
+
+function GottaGoFast.SetObjectiveFontFlag(info, value)
+  GottaGoFast.db.profile.ObjectiveFontFlag = value;
+  GottaGoFastObjectiveFrame.font:SetFont(GottaGoFast.LSM:Fetch("font", GottaGoFast.db.profile.ObjectiveFont), GottaGoFast.db.profile.ObjectiveFontSize, GottaGoFast.db.profile.ObjectiveFontFlag);
+end
+
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFast.LSM:Register("font", "Myriad Condensed Web", "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf")
@@ -230,6 +248,7 @@ function GottaGoFast.InitOptions()
       TimerFont = "Myriad Condensed Web",
       TimerFontSize = 29,
       TimerColor = "ffffffff",
+      TimerFontFlag = "OUTLINE",
       ObjectiveAlign = "LEFT",
       ObjectiveX = 0,
       ObjectiveY = -40,
@@ -238,6 +257,7 @@ function GottaGoFast.InitOptions()
       ObjectiveCollapsed = false,
       ObjectiveColor = "ffffffff",
       ObjectiveCompleteColor = "ff0ff000",
+      ObjectiveFontFlag = "OUTLINE",
       IncreaseColor = "ffffffff",
       LevelInTimer = true,
       LevelInObjectives = false,
@@ -367,6 +387,15 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetTimerFontSize,
             set = GottaGoFast.SetTimerFontSize,
           },
+          TimerFontFlag = {
+            order = 9,
+            type = "select",
+            name = "Timer Font Flag",
+            desc = "Default: OUTLINE",
+            values = {["OUTLINE"] = "OUTLINE", ["THICKOUTLINE"] = "THICKOUTLINE", ["MONOCHROME"] = "MONOCHROME", ["NONE"] = nil},
+            get = GottaGoFast.GetTimerFontFlag,
+            set = GottaGoFast.SetTimerFontFlag,
+          },
           ObjectiveX = {
             order = 5,
             type = "range",
@@ -400,8 +429,17 @@ function GottaGoFast.InitOptions()
             get = GottaGoFast.GetObjectiveFontSize,
             set = GottaGoFast.SetObjectiveFontSize,
           },
+          ObjectiveFontFlag = {
+            order = 10,
+            type = "select",
+            name = "Objective Font Flag",
+            desc = "Default: OUTLINE",
+            values = {["OUTLINE"] = "OUTLINE", ["THICKOUTLINE"] = "THICKOUTLINE", ["MONOCHROME"] = "MONOCHROME", ["NONE"] = nil},
+            get = GottaGoFast.GetObjectiveFontFlag,
+            set = GottaGoFast.SetObjectiveFontFlag,
+          },
           TimerAlign = {
-            order = 9,
+            order = 11,
             type = "select",
             name = "Timer Align",
             desc = "Default: CENTER",
@@ -410,7 +448,7 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetTimerAlign,
           },
           ObjectiveAlign = {
-            order = 10,
+            order = 12,
             type = "select",
             name = "Objective Align",
             desc = "Default: LEFT",
@@ -419,7 +457,7 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetObjectiveAlign,
           },
           TimerFont = {
-            order = 11,
+            order = 13,
             type = "select",
             dialogControl = "LSM30_Font",
             name = "Timer Font",
@@ -429,7 +467,7 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetTimerFont,
           },
           ObjectiveFont = {
-            order = 12,
+            order = 14,
             type = "select",
             dialogControl = "LSM30_Font",
             name = "Objective Font",
@@ -439,7 +477,7 @@ function GottaGoFast.InitOptions()
             set = GottaGoFast.SetObjectiveFont,
           },
           ObjectiveColor = {
-            order = 13,
+            order = 15,
             type = "color",
             name = "Objective Color",
             desc = "Default: White",
@@ -448,7 +486,7 @@ function GottaGoFast.InitOptions()
             hasAlpha = false,
           },
           ObjectiveCompleteColor = {
-            order = 14,
+            order = 16,
             type = "color",
             name = "Objective Complete Color",
             desc = "Default: Green",
@@ -457,7 +495,7 @@ function GottaGoFast.InitOptions()
             hasAlpha = false,
           },
           TimerColor = {
-            order = 15,
+            order = 17,
             type = "color",
             name = "Timer Color",
             desc = "Default: White",
@@ -466,7 +504,7 @@ function GottaGoFast.InitOptions()
             hasAlpha = false,
           },
           IncreaseColor = {
-            order = 16,
+            order = 18,
             type = "color",
             name = "Keystone Increase Color",
             desc = "Default: White",
@@ -475,7 +513,7 @@ function GottaGoFast.InitOptions()
             hasAlpha = false,
           },
           DemoMode = {
-            order = 17,
+            order = 19,
             type = "execute",
             name = "Demo Mode",
             desc = "Shows GottaGoFast Outside CM For Demo / Setup Purposes",
