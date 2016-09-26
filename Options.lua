@@ -205,6 +205,15 @@ function GottaGoFast.SetIncreaseInObjectives(info, value)
   GottaGoFast.UpdateCMObjectives();
 end
 
+function GottaGoFast.GetObjectiveCompleteInObjectives(info)
+  return GottaGoFast.db.profile.ObjectiveCompleteInObjectives;
+end
+
+function GottaGoFast.SetObjectiveCompleteInObjectives(info, value)
+  GottaGoFast.db.profile.ObjectiveCompleteInObjectives = value;
+  GottaGoFast.UpdateCMObjectives();
+end
+
 function GottaGoFast.InitOptions()
   GottaGoFast.LSM = LibStub:GetLibrary("LibSharedMedia-3.0");
   GottaGoFast.LSM:Register("font", "Myriad Condensed Web", "Interface\\Addons\\GottaGoFast\\MyriadCondensedWeb.ttf")
@@ -234,6 +243,7 @@ function GottaGoFast.InitOptions()
       LevelInObjectives = false,
       AffixesInObjectives = true,
       IncreaseInObjectives = true,
+      ObjectiveCompleteInObjectives = true,
       History = {},
     },
   }
@@ -293,6 +303,14 @@ function GottaGoFast.InitOptions()
             desc = "Bonus Keystone Time Splits",
             get = GottaGoFast.GetIncreaseInObjectives,
             set = GottaGoFast.SetIncreaseInObjectives,
+          },
+          ObjectiveCompleteInObjectives = {
+            order = 7,
+            type = "toggle",
+            name = "CM Objective Complete Display (Objectives)",
+            desc = "Show the time objectives we're completed at",
+            get = GottaGoFast.GetObjectiveCompleteInObjectives,
+            set = GottaGoFast.SetObjectiveCompleteInObjectives,
           }
         }
       },
