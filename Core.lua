@@ -34,7 +34,7 @@ function GottaGoFast:OnEnable()
 end
 
 function GottaGoFast:OnDisable()
-    -- Called when the addon is disabled
+  -- Called when the addon is disabled
 end
 
 function GottaGoFast:CHALLENGE_MODE_START()
@@ -46,6 +46,7 @@ end
 function GottaGoFast:CHALLENGE_MODE_COMPLETED()
   --self:Print("CM Complete");
   GottaGoFast.CompleteCM();
+  -- GottaGoFast.StoreRun();
 end
 
 function GottaGoFast:CHALLENGE_MODE_RESET()

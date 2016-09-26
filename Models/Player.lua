@@ -9,13 +9,10 @@ setmetatable(Player, {
   end,
 })
 
-function Player.New(name, server, class, iLvl, spec, role)
+function Player.New(name, class, role)
   local self = setmetatable({}, Player)
   self.name = name;
-  self.server = server;
   self.class = class;
-  self.iLvl = iLvl;
-  self.spec = spec;
   self.role = role;
   return self
 end
@@ -28,36 +25,12 @@ function Player:SetName(name)
   self.name = name
 end
 
-function Player:GetServer()
-  return self.server
-end
-
-function Player:SetServer(server)
-  self.server = server
-end
-
 function Player:GetClass()
   return self.class
 end
 
 function Player:SetClass(class)
   self.class = class
-end
-
-function Player:GetILvl()
-  return self.iLvl
-end
-
-function Player:SetILvl(iLvl)
-  self.iLvl = iLvl
-end
-
-function Player:GetSpec()
-  return self.spec
-end
-
-function Player:SetSpec(spec)
-  self.spec = spec
 end
 
 function Player:GetRole()
@@ -70,4 +43,30 @@ end
 
 function GottaGoFast.InitModelPlayer()
   GottaGoFast.Models.Player = Player;
+end
+
+function GottaGoFast.GetGroupPrefix()
+  if IsInRaid() then
+    return "raid";
+  else
+    return "party";
+  end
+end
+
+function GottaGoFast.GetPlayer(unit)
+  local name = GetUnitName(unit, false);
+  local class = UnitClass(unit);
+  local role = UnitGroupRolesAssigned(unit);
+  return GottaGoFast.Models.Player.New(name, class, role);
+end
+
+function GottaGoFast.GetPlayersFromGroup()
+  local players = {};
+  local members = GetNumGroupMembers();
+  local prefix = GottaGoFast.GetGroupPrefix();
+  for i = 1, members - 1 do
+    table.insert(players, GottaGoFast.GetPlayer(prefix .. i));
+  end
+  table.insert(players, GottaGoFast.GetPlayer("player"));
+  return players;
 end
