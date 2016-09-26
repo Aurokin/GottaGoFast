@@ -13,7 +13,7 @@ end
 function GottaGoFast.StoreRun()
   if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM) ~= nil) then
     local cCM = GottaGoFast.CurrentCM;
-    local k, d = GottaGoFast.FindDungeonByZoneID(GottaGoFast.zoneID);
+    local k, d = GottaGoFast.FindDungeonByZoneID(cCM["ZoneID"]);
     if (GottaGoFast.Completed == true and d ~= nil) then
       local deaths = cCM["Deaths"];
       local startTime = cCM["StartTime"];
