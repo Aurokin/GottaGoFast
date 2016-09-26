@@ -54,10 +54,8 @@ end
 
 function GottaGoFast.FindDungeonByZoneID(zoneID)
   if (next(GottaGoFast.db.profile.History) ~= nil) then
-    for k, d in pairs(GottaGoFast.db.profile.History) do
-      if (Dungeon.GetZoneID(d) == name) then
-        return k, d;
-      end
+    if (GottaGoFast.db.profile.History[zoneID] and next(GottaGoFast.db.profile.History[zoneID]) ~= nil) then
+      return zoneID, GottaGoFast.db.profile.History[zoneID];
     end
   end
   return nil, nil;
