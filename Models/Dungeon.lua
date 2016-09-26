@@ -1,13 +1,15 @@
 -- Define Objects
 -- Dungeon
 local Dungeon = {}
-Dungeon.__index = Dungeon
-
-setmetatable(Dungeon, {
+local DungeonMetaTable = {
   __call = function (cls, ...)
     return cls.new(...)
   end,
-})
+};
+
+Dungeon.__index = Dungeon
+
+setmetatable(Dungeon, DungeonMetaTable);
 
 function Dungeon.New(name, zoneID, objectives)
   local self = setmetatable({}, Dungeon)
@@ -56,6 +58,7 @@ end
 
 function GottaGoFast.InitModelDungeon()
   GottaGoFast.Models.Dungeon = Dungeon;
+  GottaGoFast.Models.DungeonMetaTable = DungeonMetaTable;
 end
 
 function GottaGoFast.FindDungeonByZoneID(zoneID)

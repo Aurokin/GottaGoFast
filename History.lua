@@ -2,6 +2,15 @@ function GottaGoFast.InitModels()
   GottaGoFast.InitModelPlayer();
   GottaGoFast.InitModelDungeon();
   GottaGoFast.InitModelRun();
+  GottaGoFast.InitMetaTables();
+end
+
+function GottaGoFast.InitMetaTables()
+  if (next(GottaGoFast.db.profile.History) ~= nil) then
+    for k, d in pairs(GottaGoFast.db.profile.History) do
+      setmetatable(d, GottaGoFast.Models.DungeonMetaTable);
+    end
+  end
 end
 
 function GottaGoFast.InitDungeon(name, zoneID, objectives)
