@@ -46,7 +46,7 @@ end
 function GottaGoFast:CHALLENGE_MODE_COMPLETED()
   --self:Print("CM Complete");
   GottaGoFast.CompleteCM();
-  -- GottaGoFast.StoreRun();
+  GottaGoFast.StoreRun();
 end
 
 function GottaGoFast:CHALLENGE_MODE_RESET()

@@ -82,7 +82,7 @@ function GottaGoFast.SetupCM(currentZoneID)
 
   GottaGoFast.BuildCMTooltip();
   GottaGoFast.HideObjectiveTracker();
-  -- GottaGoFast.InitDungeon(GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["Bosses"]);
+  GottaGoFast.InitDungeon(GottaGoFast.CurrentCM["Name"], GottaGoFast.CurrentCM["ZoneID"], GottaGoFast.CurrentCM["Bosses"]);
 end
 
 function GottaGoFast.SetupFakeCM()

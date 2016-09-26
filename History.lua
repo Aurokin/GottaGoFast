@@ -2,15 +2,6 @@ function GottaGoFast.InitModels()
   GottaGoFast.InitModelPlayer();
   GottaGoFast.InitModelDungeon();
   GottaGoFast.InitModelRun();
-  GottaGoFast.InitMetaTables();
-end
-
-function GottaGoFast.InitMetaTables()
-  if (next(GottaGoFast.db.profile.History) ~= nil) then
-    for k, d in pairs(GottaGoFast.db.profile.History) do
-      setmetatable(d, GottaGoFast.Models.DungeonMetaTable);
-    end
-  end
 end
 
 function GottaGoFast.InitDungeon(name, zoneID, objectives)
@@ -22,7 +13,7 @@ end
 function GottaGoFast.StoreRun()
   if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM) ~= nil) then
     local cCM = GottaGoFast.CurrentCM;
-    local d = GottaGoFast.FindDungeonByZoneID(GottaGoFast.zoneID);
+    local k, d = GottaGoFast.FindDungeonByZoneID(GottaGoFast.zoneID);
     if (GottaGoFast.Completed == true and d ~= nil) then
       local deaths = cCM["Deaths"];
       local startTime = cCM["StartTime"];
@@ -32,8 +23,10 @@ function GottaGoFast.StoreRun()
       local objectiveTimes = cCM["ObjectiveTimes"];
       local affixes = cCM["Affixes"];
       local players = GottaGoFast.GetPlayersFromGroup();
-      local run = GottaGoFast.Models.Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, affixes, players);
-      d:AddRun(run);
+      if (startTime ~= nil and endTime ~= nil and totalTime ~= nil and deaths ~= nil and level ~= nil and next(objectiveTimes) ~= nil and next(affixes) ~= nil and next(players) ~= nil) then  
+        local run = GottaGoFast.Models.Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, affixes, players);
+        GottaGoFast.Models.Dungeon.AddRun(d, run);
+      end
     end
   end
 end

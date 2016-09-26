@@ -1,17 +1,10 @@
 -- Define Objects
 -- Run
 local Run = {}
-Run.__index = Run
-
-setmetatable(Run, {
-  __call = function (cls, ...)
-    return cls.new(...)
-  end,
-})
 
 function Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, affixes, players)
-  local self = setmetatable({}, Run)
-  self.active = true;
+  local self = {};
+  self.active = false;
   self.startTime = startTime;
   self.endTime = endTime;
   self.totalTime = totalTime;
@@ -23,75 +16,75 @@ function Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, a
   return self
 end
 
-function Run:GetActive()
+function Run.GetActive(self)
   return self.active
 end
 
-function Run:SetActive(active)
+function Run.SetActive(self, active)
   self.active = active
 end
 
-function Run:GetStartTime()
+function Run.GetStartTime(self)
   return self.startTime
 end
 
-function Run:SetStartTime(startTime)
+function Run.SetStartTime(self, startTime)
   self.startTime = startTime
 end
 
-function Run:GetEndTime()
+function Run.GetEndTime(self)
   return self.endTime
 end
 
-function Run:SetEndTime(endTime)
+function Run.SetEndTime(self, endTime)
   self.endTime = endTime
 end
 
-function Run:GetTotalTime()
+function Run.GetTotalTime(self)
   return self.totalTime
 end
 
-function Run:SetTotalTime(totalTime)
+function Run.SetTotalTime(self, totalTime)
   self.totalTime = totalTime
 end
 
-function Run:GetDeaths()
+function Run.GetDeaths(self)
   return self.deaths
 end
 
-function Run:SetDeaths(deaths)
+function Run.SetDeaths(self, deaths)
   self.deaths = deaths
 end
 
-function Run:GetLevel()
+function Run.GetLevel(self)
   return self.level
 end
 
-function Run:SetLevel(level)
+function Run.SetLevel(self, level)
   self.level = level
 end
 
-function Run:GetObjectiveTimes()
+function Run.GetObjectiveTimes(self)
   return self.objectiveTimes
 end
 
-function Run:SetObjectiveTimes(objectiveTimes)
+function Run.SetObjectiveTimes(self, objectiveTimes)
   self.objectiveTimes = objectiveTimes
 end
 
-function Run:GetAffixes()
+function Run.GetAffixes(self)
   return self.affixes
 end
 
-function Run:SetAffixes(affixes)
+function Run.SetAffixes(self, affixes)
   self.affixes = affixes
 end
 
-function Run:GetPlayers()
+function Run.GetPlayers(self)
   return self.players
 end
 
-function Run:SetPlayers(players)
+function Run.SetPlayers(self, players)
   self.players = players
 end
 

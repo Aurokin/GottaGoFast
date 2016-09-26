@@ -1,15 +1,6 @@
 -- Define Objects
 -- Dungeon
 local Dungeon = {}
-local DungeonMetaTable = {
-  __call = function (cls, ...)
-    return cls.new(...)
-  end,
-};
-
-Dungeon.__index = Dungeon
-
-setmetatable(Dungeon, DungeonMetaTable);
 
 function Dungeon.New(name, zoneID, objectives)
   local self = setmetatable({}, Dungeon)
@@ -20,54 +11,54 @@ function Dungeon.New(name, zoneID, objectives)
   return self
 end
 
-function Dungeon:GetName()
+function Dungeon.GetName(self)
   return self.name
 end
 
-function Dungeon:SetName(name)
+function Dungeon.SetName(self, name)
   self.name = name
 end
 
-function Dungeon:GetZoneID()
+function Dungeon.GetZoneID(self)
   return self.zoneID
 end
 
-function Dungeon:SetZoneID(zoneID)
+function Dungeon.SetZoneID(self, zoneID)
   self.zoneID = zoneID
 end
 
-function Dungeon:GetObjectives()
+function Dungeon.GetObjectives(self)
   return self.objectives
 end
 
-function Dungeon:SetObjectives(objectives)
+function Dungeon.SetObjectives(self, objectives)
   self.objectives = objectives
 end
 
-function Dungeon:GetRuns()
+function Dungeon.GetRuns(self)
   return self.runs
 end
 
-function Dungeon:SetRuns(runs)
+function Dungeon.SetRuns(self, runs)
   self.runs = runs
 end
 
-function Dungeon:AddRun(run)
+function Dungeon.AddRun(self, run)
   table.insert(self.runs, run);
+  -- table.insert(GottaGofast.db.profile.History[self].runs, run);
 end
 
 function GottaGoFast.InitModelDungeon()
   GottaGoFast.Models.Dungeon = Dungeon;
-  GottaGoFast.Models.DungeonMetaTable = DungeonMetaTable;
 end
 
 function GottaGoFast.FindDungeonByZoneID(zoneID)
   if (next(GottaGoFast.db.profile.History) ~= nil) then
     for k, d in pairs(GottaGoFast.db.profile.History) do
-      if (d:GetZoneID() == name) then
-        return d;
+      if (Dungeon.GetZoneID(d) == name) then
+        return k, d;
       end
     end
   end
-  return nil;
+  return nil, nil;
 end

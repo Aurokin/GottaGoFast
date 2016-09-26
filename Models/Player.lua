@@ -1,43 +1,36 @@
 -- Define Objects
 -- Player
 local Player = {}
-Player.__index = Player
-
-setmetatable(Player, {
-  __call = function (cls, ...)
-    return cls.new(...)
-  end,
-})
 
 function Player.New(name, class, role)
-  local self = setmetatable({}, Player)
+  local self = {}
   self.name = name;
   self.class = class;
   self.role = role;
   return self
 end
 
-function Player:GetName()
+function Player.GetName(self)
   return self.name
 end
 
-function Player:SetName(name)
+function Player.SetName(self, name)
   self.name = name
 end
 
-function Player:GetClass()
+function Player.GetClass(self)
   return self.class
 end
 
-function Player:SetClass(class)
+function Player.SetClass(self, class)
   self.class = class
 end
 
-function Player:GetRole()
+function Player.GetRole(self)
   return self.role
 end
 
-function Player:SetRole(role)
+function Player.SetRole(self, role)
   self.role = role
 end
 
