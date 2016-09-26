@@ -4,18 +4,25 @@ function GottaGoFast.UpdateCM()
   end
 end
 
+function GottaGoFast.EmpoweredString()
+  if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
+    local empowered = GottaGoFast.CurrentCM["Empowered"];
+    if (empowered) then
+      return "Empowered";
+    else
+      return "Depleted";
+    end
+  end
+  return "?";
+end
+
 function GottaGoFast.BuildCMTooltip()
   if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
     local newTooltip;
     local cmLevel = GottaGoFast.CurrentCM["Level"];
-    local empowered = GottaGoFast.CurrentCM["Empowered"];
+    local empowered = GottaGoFast.EmpoweredString();
     local bonus = GottaGoFast.CurrentCM["Bonus"];
     if (cmLevel) then
-      if (empowered) then
-        empowered = "Empowered";
-      else
-        empowered = "Depleted";
-      end
       newTooltip = empowered .. ": Level " .. cmLevel .. " - " .. tostring(bonus) .. "%\n\n";
       if (next(GottaGoFast.CurrentCM["Affixes"])) then
         for i, affixID in pairs(GottaGoFast.CurrentCM["Affixes"]) do
@@ -216,7 +223,11 @@ function GottaGoFast.UpdateCMTimer()
       end
 
       if (GottaGoFast.db.profile.LevelInTimer and GottaGoFast.CurrentCM["Level"]) then
-        time = "[" .. GottaGoFast.CurrentCM["Level"] .. "] " .. time;
+        local depleted = "";
+        if (GottaGoFast.CurrentCM["Empowered"] == false) then
+          depleted = "d";
+        end
+        time = "[" .. GottaGoFast.CurrentCM["Level"] .. depleted .. "] " .. time;
       end
 
       -- Update Frame
@@ -228,6 +239,7 @@ end
 
 function GottaGoFast.UpdateCMObjectives()
   if (GottaGoFast.CurrentCM and next(GottaGoFast.CurrentCM)) then
+    local empowered = GottaGoFast.EmpoweredString();
     local objectiveString = "";
     local affixString = "";
     local increaseString = "";
@@ -244,7 +256,7 @@ function GottaGoFast.UpdateCMObjectives()
       objectiveString = objectiveString .. GottaGoFast.IncreaseColorString(string.sub(increaseString, 1, string.len(increaseString) - 3) .. "\n");
     end
     if (GottaGoFast.db.profile.LevelInObjectives and GottaGoFast.CurrentCM["Level"]) then
-      objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString("Level " .. GottaGoFast.CurrentCM["Level"] .. " - (+" .. GottaGoFast.CurrentCM["Bonus"] .. "%)\n");
+      objectiveString = objectiveString .. GottaGoFast.ObjectiveExtraString("Level " .. GottaGoFast.CurrentCM["Level"] .. " - (+" .. GottaGoFast.CurrentCM["Bonus"] .. "%) - " .. empowered .. "\n");
     end
     if (GottaGoFast.db.profile.AffixesInObjectives and next(GottaGoFast.CurrentCM["Affixes"])) then
       for k, v in pairs(GottaGoFast.CurrentCM["Affixes"]) do
