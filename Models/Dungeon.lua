@@ -44,8 +44,7 @@ function Dungeon.SetRuns(self, runs)
 end
 
 function Dungeon.AddRun(self, run)
-  table.insert(self.runs, run);
-  -- table.insert(GottaGofast.db.profile.History[self].runs, run);
+  table.insert(GottaGoFast.db.profile.History[self].runs, run);
 end
 
 function GottaGoFast.InitModelDungeon()

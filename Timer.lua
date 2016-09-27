@@ -142,6 +142,20 @@ function GottaGoFast.HideFrames()
   end
 end
 
+function GottaGoFast.StringToTime(time)
+  time = GottaGoFast.Utility.TrimStr(time);
+  time = GottaGoFast.Utility.ExplodeStr(":", time);
+  if (time[1] ~= nil and time[2] ~= nil) then
+    local mins = tonumber(time[1]);
+    local secs = tonumber(time[2]);
+    time = (mins * 60) + secs;
+    time = GetTime() - time;
+  else
+    time = -1;
+  end
+  return time;
+end
+
 function GottaGoFast.SecondsToTime(seconds)
   local min = math.floor(seconds/60);
   local sec = seconds - (min * 60);

@@ -2,12 +2,13 @@
 -- Run
 local Run = {}
 
-function Run.New(startTime, endTime, totalTime, deaths, level, objectiveTimes, affixes, players)
+function Run.New(corrupt, startTime, endTime, timeStamp, deaths, level, objectiveTimes, affixes, players)
   local self = {};
   self.active = false;
+  self.corrupt = corrupt;
   self.startTime = startTime;
   self.endTime = endTime;
-  self.totalTime = totalTime;
+  self.timeStamp = timeStamp;
   self.deaths = deaths;
   self.level = level;
   self.objectiveTimes = objectiveTimes;
@@ -22,6 +23,14 @@ end
 
 function Run.SetActive(self, active)
   self.active = active
+end
+
+function Run.GetCorrupt(self)
+  return self.corrupt
+end
+
+function Run.SetCorrupt(self, corrupt)
+  self.corrupt = corrupt
 end
 
 function Run.GetStartTime(self)
@@ -40,12 +49,12 @@ function Run.SetEndTime(self, endTime)
   self.endTime = endTime
 end
 
-function Run.GetTotalTime(self)
-  return self.totalTime
+function Run.GetTimeStamp(self)
+  return self.timeStamp
 end
 
-function Run.SetTotalTime(self, totalTime)
-  self.totalTime = totalTime
+function Run.SetTimeStamp(self, timeStamp)
+  self.timeStamp = timeStamp
 end
 
 function Run.GetDeaths(self)
