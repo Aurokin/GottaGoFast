@@ -265,6 +265,7 @@ function GottaGoFast.InitOptions()
       IncreaseInObjectives = true,
       ObjectiveCompleteInObjectives = true,
       History = {},
+      DebugMode = false,
     },
   }
   local options = {
@@ -392,7 +393,7 @@ function GottaGoFast.InitOptions()
             type = "select",
             name = "Timer Font Flag",
             desc = "Default: OUTLINE",
-            values = {["OUTLINE"] = "OUTLINE", ["THICKOUTLINE"] = "THICKOUTLINE", ["MONOCHROME"] = "MONOCHROME", ["NONE"] = nil},
+            values = {["OUTLINE"] = "OUTLINE", ["THICKOUTLINE"] = "THICKOUTLINE", ["MONOCHROME"] = "MONOCHROME", ["NONE"] = "NONE"},
             get = GottaGoFast.GetTimerFontFlag,
             set = GottaGoFast.SetTimerFontFlag,
           },

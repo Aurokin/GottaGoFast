@@ -38,26 +38,26 @@ function GottaGoFast:OnDisable()
 end
 
 function GottaGoFast:CHALLENGE_MODE_START()
-  --self:Print("CM Start");
+  GottaGoFast.Utility.DebugPrint("CM Start");
   GottaGoFast.WhereAmI();
   GottaGoFast.StartCM(10);
 end
 
 function GottaGoFast:CHALLENGE_MODE_COMPLETED()
-  --self:Print("CM Complete");
+  GottaGoFast.Utility.DebugPrint("CM Complete");
   GottaGoFast.CompleteCM();
   GottaGoFast.StoreRun();
 end
 
 function GottaGoFast:CHALLENGE_MODE_RESET()
-  --self:Print("CM Reset");
+  GottaGoFast.Utility.DebugPrint("CM Reset");
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
   GottaGoFast.WipeCM();
   GottaGoFast.SetupCM(currentZoneID);
 end
 
 function GottaGoFast:PLAYER_ENTERING_WORLD()
-  --self:Print("Player Entered World");
+  GottaGoFast.Utility.DebugPrint("Player Entered World");
   GottaGoFast.CheckCount = 0;
   GottaGoFast.FirstCheck = false;
   GottaGoFast.ResetState();
@@ -66,14 +66,14 @@ end
 
 function GottaGoFast:SCENARIO_POI_UPDATE()
   if (GottaGoFast.inCM) then
-    --self:Print("Scenario POI Update");
+    GottaGoFast.Utility.DebugPrint("Scenario POI Update");
     if (GottaGoFast.CurrentCM["Steps"] == 0 and GottaGoFast.CurrentCM["Completed"] == false and next(GottaGoFast.CurrentCM["Bosses"]) == nil) then
       GottaGoFast.WhereAmI();
     end
     GottaGoFast.UpdateCMInformation();
     GottaGoFast.UpdateCMObjectives();
   elseif (GottaGoFast.inTW) then
-    --Self:Print("Scenario POI Update");
+    GottaGoFast.Utility.DebugPrint("Scenario POI Update");
     if (GottaGoFast.CurrentTW["Steps"] == 0 and GottaGoFast.CurrentTW["Completed"] == false and next(GottaGoFast.CurrentTW["Bosses"]) == nil) then
       -- Timewalking Must Be Resetup If You Enter First
       local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
@@ -103,19 +103,19 @@ end
 
 function GottaGoFast:ChatComm(prefix, input, distribution, sender)
   -- Right Now This Is Only Used For Syncing Timer
-  --GottaGoFast:Print("Message Received");
+  GottaGoFast.Utility.DebugPrint("Message Received");
   if (input == "FixMyTimer" and GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
     -- Someone asked for a timer, send it to them!
     if (GottaGoFast.CurrentTW["LateStart"] == false and GottaGoFast.CurrentTW["StartTime"] and GottaGoFast.CurrentTW["CurrentTime"]) then
       local CurrentTWString = GottaGoFast:Serialize(GottaGoFast.CurrentTW);
-      --GottaGoFast:Print("Timer Sent");
+      GottaGoFast.Utility.DebugPrint("Timer Sent");
       GottaGoFast:SendCommMessage("GottaGoFast", CurrentTWString, "PARTY", nil, "ALERT");
     end
   else
     -- Received Timer, See If You Need It, Then Update
     if (GottaGoFast.inTW == true and GottaGoFast.CurrentTW) then
       if (GottaGoFast.CurrentTW["LateStart"] == true) then
-        --GottaGoFast:Print("Replacing Timer");
+        GottaGoFast.Utility.DebugPrint("Replacing Timer");
         -- Set Table
         GottaGoFast:Deserialize(input);
         local DIW, ETW = GottaGoFast:Deserialize(input);
@@ -146,31 +146,31 @@ end
 
 function GottaGoFast.WhereAmI()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
-  --GottaGoFast:Print("Difficulty: " .. difficulty);
-  --GottaGoFast:Print("Zone ID: " .. currentZoneID);
+  GottaGoFast.Utility.DebugPrint("Difficulty: " .. difficulty);
+  GottaGoFast.Utility.DebugPrint("Zone ID: " .. currentZoneID);
   if (GottaGoFast.FirstCheck == false) then
     GottaGoFast.FirstCheck = true;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
   elseif (difficulty == 8) then
-      --GottaGoFast:Print("Player Entered Challenge Mode");
+      GottaGoFast.Utility.DebugPrint("Player Entered Challenge Mode");
       GottaGoFast.WipeCM();
-      --GottaGoFast:Print("Wiping CM");
+      GottaGoFast.Utility.DebugPrint("Wiping CM");
       GottaGoFast.SetupCM(currentZoneID);
-      --GottaGoFast:Print("Setting Up CM");
+      GottaGoFast.Utility.DebugPrint("Setting Up CM");
       GottaGoFast.UpdateCMTimer();
-      --GottaGoFast:Print("Setting Up Timer");
+      GottaGoFast.Utility.DebugPrint("Setting Up Timer");
       GottaGoFast.UpdateCMObjectives();
-      --GottaGoFast:Print("Setting Up Objectives");
+      GottaGoFast.Utility.DebugPrint("Setting Up Objectives");
       GottaGoFast.inCM = true;
       GottaGoFast.inTW = false;
       GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
-      --GottaGoFast:Print("Setting Up Update Script");
+      GottaGoFast.Utility.DebugPrint("Setting Up Update Script");
       GottaGoFast.ShowFrames();
-      --GottaGoFast:Print("Showing Frames");
+      GottaGoFast.Utility.DebugPrint("Showing Frames");
   elseif (difficulty == 24 and GottaGoFastInstanceInfo[currentZoneID]) then
     -- Difficutly 24 for Timewalking
     if (GottaGoFastInstanceInfo[currentZoneID]["TW"]) then
-      --GottaGoFast:Print("Player Entered Timewalking Dungeon");
+      Utility.DebugPrint("Player Entered Timewalking Dungeon");
       GottaGoFast.WipeTW();
       GottaGoFast.SetupTW(currentZoneID);
       GottaGoFast.UpdateTWTimer();
@@ -183,7 +183,7 @@ function GottaGoFast.WhereAmI()
     end
   elseif (GottaGoFast.CheckCount < 20 and GottaGoFastInstanceInfo[currentZoneID]) then
     GottaGoFast.CheckCount = GottaGoFast.CheckCount + 1;
-    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
+    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.2);
   else
     GottaGoFast.ResetState();
   end

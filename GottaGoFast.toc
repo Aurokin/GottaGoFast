@@ -9,6 +9,7 @@
 Embeds.xml
 
 Core.lua
+Utility.lua
 Timer.lua
 CM.lua
 TW.lua
@@ -17,4 +18,5 @@ Options.lua
 Models/Player.lua
 Models/Dungeon.lua
 Models/Run.lua
+Models/TimeStamp.lua
 History.lua
