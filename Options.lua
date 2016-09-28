@@ -265,6 +265,7 @@ function GottaGoFast.InitOptions()
       IncreaseInObjectives = true,
       ObjectiveCompleteInObjectives = true,
       History = {},
+      DebugMode = false,
     },
   }
   local options = {

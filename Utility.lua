@@ -18,4 +18,11 @@ function Utility.TrimStr(str)
   return str:match( "^%s*(.-)%s*$" );
 end
 
+function Utility.DebugPrint(str)
+  if (GottaGoFast.db.profile.DebugMode) then
+    GottaGoFast:Print(str);
+  end
+end
+
+
 GottaGoFast.Utility = Utility;

@@ -52,6 +52,9 @@ function GottaGoFast.InitModelDungeon()
 end
 
 function GottaGoFast.FindDungeonByZoneID(zoneID)
+  if (GottaGoFast.db.profile.History == nil) then
+    GottaGoFast.db.profile.History = {};
+  end
   if (next(GottaGoFast.db.profile.History) ~= nil) then
     if (GottaGoFast.db.profile.History[zoneID] and next(GottaGoFast.db.profile.History[zoneID]) ~= nil) then
       return zoneID, GottaGoFast.db.profile.History[zoneID];
