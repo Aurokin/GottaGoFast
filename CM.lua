@@ -82,7 +82,7 @@ function GottaGoFast.SetupCM(currentZoneID)
     end
     if (curValue ~= 0) then
       GottaGoFast.Utility.DebugPrint("Asking For Timer");
-      GottaGoFast:SendCommMessage("GottaGoFastCM", "FixCM", "PARTY", nil, "ALERT");
+      GottaGoFast:ScheduleTimer(GottaGoFast:SendCommMessage("GottaGoFastCM", "FixCM", "PARTY", nil, "ALERT"), 1);
     end
   end
 
