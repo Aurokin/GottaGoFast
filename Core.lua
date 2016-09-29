@@ -56,6 +56,8 @@ function GottaGoFast:CHALLENGE_MODE_RESET()
   local _, _, difficulty, _, _, _, _, currentZoneID = GetInstanceInfo();
   GottaGoFast.WipeCM();
   GottaGoFast.SetupCM(currentZoneID);
+  GottaGoFast.UpdateCMTimer();
+  GottaGoFast.UpdateCMObjectives();
 end
 
 function GottaGoFast:PLAYER_ENTERING_WORLD()
