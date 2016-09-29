@@ -138,35 +138,10 @@ function GottaGoFast.WhereAmI()
     GottaGoFast.FirstCheck = true;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.2);
   elseif (difficulty == 8) then
-      GottaGoFast.Utility.DebugPrint("Player Entered Challenge Mode");
-      GottaGoFast.WipeCM();
-      GottaGoFast.Utility.DebugPrint("Wiping CM");
-      GottaGoFast.SetupCM(currentZoneID);
-      GottaGoFast.Utility.DebugPrint("Setting Up CM");
-      GottaGoFast.UpdateCMTimer();
-      GottaGoFast.Utility.DebugPrint("Setting Up Timer");
-      GottaGoFast.UpdateCMObjectives();
-      GottaGoFast.Utility.DebugPrint("Setting Up Objectives");
-      GottaGoFast.inCM = true;
-      GottaGoFast.inTW = false;
-      GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
-      GottaGoFast.Utility.DebugPrint("Setting Up Update Script");
-      GottaGoFast.ShowFrames();
-      GottaGoFast.Utility.DebugPrint("Showing Frames");
+    GottaGoFast.InitCM(currentZoneID)
   elseif (difficulty == 24 and GottaGoFastInstanceInfo[currentZoneID]) then
     -- Difficutly 24 for Timewalking
-    if (GottaGoFastInstanceInfo[currentZoneID]["TW"]) then
-      Utility.DebugPrint("Player Entered Timewalking Dungeon");
-      GottaGoFast.WipeTW();
-      GottaGoFast.SetupTW(currentZoneID);
-      GottaGoFast.UpdateTWTimer();
-      GottaGoFast.UpdateTWObjectives();
-      GottaGoFast.inCM = false;
-      GottaGoFast.inTW = true;
-      GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
-      -- Hiding Frames For Now
-      GottaGoFast.ShowFrames();
-    end
+    GottaGoFast.InitTW(currentZoneID)
   elseif (GottaGoFast.CheckCount < 20 and GottaGoFastInstanceInfo[currentZoneID]) then
     GottaGoFast.CheckCount = GottaGoFast.CheckCount + 1;
     GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.2);

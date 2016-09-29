@@ -39,6 +39,24 @@ function GottaGoFast.BuildCMTooltip()
   end
 end
 
+function GottaGoFast.InitCM(currentZoneID)
+  GottaGoFast.Utility.DebugPrint("Player Entered Challenge Mode");
+  GottaGoFast.WipeCM();
+  GottaGoFast.Utility.DebugPrint("Wiping CM");
+  GottaGoFast.SetupCM(currentZoneID);
+  GottaGoFast.Utility.DebugPrint("Setting Up CM");
+  GottaGoFast.UpdateCMTimer();
+  GottaGoFast.Utility.DebugPrint("Setting Up Timer");
+  GottaGoFast.UpdateCMObjectives();
+  GottaGoFast.Utility.DebugPrint("Setting Up Objectives");
+  GottaGoFast.inCM = true;
+  GottaGoFast.inTW = false;
+  GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateCM);
+  GottaGoFast.Utility.DebugPrint("Setting Up Update Script");
+  GottaGoFast.ShowFrames();
+  GottaGoFast.Utility.DebugPrint("Showing Frames");
+end
+
 function GottaGoFast.SetupCM(currentZoneID)
   local _, _, steps = C_Scenario.GetStepInfo();
   local cmLevel, affixes, empowered = C_ChallengeMode.GetActiveKeystoneInfo();

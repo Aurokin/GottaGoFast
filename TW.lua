@@ -7,6 +7,21 @@ function GottaGoFast.UpdateTW()
   end
 end
 
+function GottaGoFast.InitTW(currentZoneID)
+  if (GottaGoFastInstanceInfo[currentZoneID]["TW"]) then
+    Utility.DebugPrint("Player Entered Timewalking Dungeon");
+    GottaGoFast.WipeTW();
+    GottaGoFast.SetupTW(currentZoneID);
+    GottaGoFast.UpdateTWTimer();
+    GottaGoFast.UpdateTWObjectives();
+    GottaGoFast.inCM = false;
+    GottaGoFast.inTW = true;
+    GottaGoFastFrame:SetScript("OnUpdate", GottaGoFast.UpdateTW);
+    -- Hiding Frames For Now
+    GottaGoFast.ShowFrames();
+  end
+end
+
 function GottaGoFast.SetupTW(currentZoneID)
   local _, _, steps = C_Scenario.GetStepInfo();
   GottaGoFast.CurrentTW = {};
