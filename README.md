@@ -24,8 +24,20 @@ Mythic+ (CM) And Timewalking Timer!
 ```
 - History Frame
 ```
- This Will Take A Lot Of Development. 
+ This Will Take A Lot Of Development.
  The History Data Being Recorded Should Be Displayable In A Custom Frame.
  It Should Be Filtered By Instance / Level / Affixes And Display Objective Times, Player Information, Deaths, TimeStamps And Obviously Level / Affixes.
+```
+- Restructure GottaGoFast
+```
+ Move History To It's Own Addon Package With GottaGoFast That Communicates Via Addon Message.
+ Move CM.lua to /CM/Init.lua, /CM/Process.lua, /CM/Display.lua, /CM/Sync.lua
+ Move TW.lua to /TW/Init.lua, /TW/Process.lua, /TW/Display.lua, /TW/Sync.lua
+ Move Timer.lua to /Timer/Init.lua, /Timer/Process.lua, Maybe More.
+```
+- Debug Mode
+```
+ Add Getters / Setters
+ Toggleable Via Chat Command
 ```
 # Bugs
