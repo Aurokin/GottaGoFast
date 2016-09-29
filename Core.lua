@@ -136,7 +136,7 @@ function GottaGoFast.WhereAmI()
   GottaGoFast.Utility.DebugPrint("Zone ID: " .. currentZoneID);
   if (GottaGoFast.FirstCheck == false) then
     GottaGoFast.FirstCheck = true;
-    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.1);
+    GottaGoFast:ScheduleTimer(GottaGoFast.WhereAmI, 0.2);
   elseif (difficulty == 8) then
       GottaGoFast.Utility.DebugPrint("Player Entered Challenge Mode");
       GottaGoFast.WipeCM();
